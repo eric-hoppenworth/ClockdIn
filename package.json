@@ -1,0 +1,25 @@
+{
+  "name": "clockd-in",
+  "version": "1.0.0",
+  "description": "an EMS",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eric-hoppenworth/ClockdIn.git"
+  },
+  "author": "mahjongg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eric-hoppenworth/ClockdIn/issues"
+  },
+  "homepage": "https://github.com/eric-hoppenworth/ClockdIn#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "mysql2": "^1.4.1",
+    "sequelize": "^4.5.0"
+  }
+}
