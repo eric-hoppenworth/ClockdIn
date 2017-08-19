@@ -42,7 +42,7 @@ app.use("/auth",authRoutes)
 
 
 //Sync Database
-models.sequelize.sync({force:true}).then(function(){
+models.sequelize.sync().then(function(){
 	app.listen(port, function(err){
 	    if(!err){
 	    	console.log("Site is live on " + port);
