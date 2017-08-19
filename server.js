@@ -1,9 +1,10 @@
-var express    = require('express')
-var app        = express()
-var passport   = require('passport')
-var session    = require('express-session')
-var bodyParser = require('body-parser')
-var exphbs     = require('express-handlebars')
+var express 	= require('express');
+var app 		= express();
+var passport 	= require('passport');
+var session 	= require('express-session');
+var bodyParser 	= require('body-parser');
+var exphbs 		= require('express-handlebars');
+var path 		= require("path");
 
 var port = process.env.PORT || 8080;
 
@@ -21,10 +22,16 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 require('./config/passport/passport.js')(passport,models.User);
 
-
+//load helpers
+var handlebars  = require('./helpers/helpers.js')(exphbs);
  //For Handlebars
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+//app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
+
+
+//make static folder
+app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 //Routes
 var routes = require("./controllers/routes.js");
@@ -32,10 +39,6 @@ app.use("/",routes);
 
 var authRoutes = require('./controllers/auth.js');
 app.use("/auth",authRoutes)
-
-
-//load passport strategies
-
 
 
 //Sync Database

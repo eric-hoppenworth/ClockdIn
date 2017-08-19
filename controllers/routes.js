@@ -11,6 +11,25 @@ router.route("/").get(function(req,res){
 	res.render("index");
 });
 
+router.route("/dashboard").get(function(req,res){
+	var myShifts = [
+		{
+			start_time: "9:00",
+			end_time: "14:00",
+			day: "Monday"
+		},{
+			start_time: "10:00",
+			end_time: "15:00",
+			day: "Tuesday"
+		},
+		{
+			start_time: "14:00",
+			end_time: "20:00",
+			day: "Thursday"
+		}
+	];
+	res.render("dashboard",{ shifts: myShifts });
+})
 
 
 /////////////////////////////////
