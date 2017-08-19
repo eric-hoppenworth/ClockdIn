@@ -19,8 +19,11 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
+    "express-handlebars": "^3.0.0",
     "mysql2": "^1.4.1",
     "path": "^0.12.7",
-    "sequelize": "^4.5.0"
+    "sequelize": "^4.5.0",
+    "vue": "^2.4.2",
+    "vue-server-renderer": "^2.4.2"
   }
 }
