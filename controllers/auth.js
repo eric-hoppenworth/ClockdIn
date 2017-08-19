@@ -1,22 +1,27 @@
 const db = require("../models");
 var router = require("express").Router();
 var path = require("path");
+var passport = require("passport");
 
 const User = db.User;
 
-//passport.authenticate
-router.route("/signup").post(
-	passport.authenticate('local-signup', {
-		successRedirect: '/dashboard',
-		failureRedirect: '/signup'
-	});
-);
-
-router.route("/signin").post(
-	passport.authenticate('local-signin', {
-		successRedirect: '/dashboard',
-		failureRedirect: '/signin'
+router.post('/signup', passport.authenticate('local-signup', {
+		successRedirect: '/',
+		failureRedirect: '/auth/signup'
+	}), 
+	function(req, res) {
+    	res.redirect('/');
 	}
 );
+
+router.post('/signin', passport.authenticate('local-signin', {
+		successRedirect: '/',
+		failureRedirect: '/auth/signin'
+	}), 
+	function(req, res) {
+    	res.redirect('/');
+	}
+);
+
 
 module.exports = router;
