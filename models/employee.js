@@ -5,11 +5,13 @@ module.exports = function(sequelize,DataTypes){
 		},
 		date_of_birth:{
 			type: DataTypes.DATE
+		},
+		is_manager:{
+			type: DataTypes.BOOLEAN
 		}
 	});
 	Employee.associate = function(models) {
-	    // We're saying that a Post should belong to an Author
-	    // A Post can't be created without an Author due to the foreign key constraint
+		// We are saying that an Employee has many shifts
 	    Employee.hasMany(models.Shift, {
 		  onDelete: "cascade"
 		});
