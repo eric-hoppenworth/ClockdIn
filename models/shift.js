@@ -11,7 +11,7 @@ module.exports = function(sequelize,DataTypes){
 		}
 	});
 	Shift.associate = function(models) {
-	    // A Post can't be created without an Author due to the foreign key constraint
+	    // We're saying that a Shift should belong to an Employee
 	    Shift.belongsTo(models.Employee, {
 		  foreignKey: {
 				allowNull: false
