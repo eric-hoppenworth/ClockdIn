@@ -1,36 +1,57 @@
-var express 		= require("express");
-var app 			= express();
-var passport		= require("passport");
-var cookieParser	= require("cookie-parser");
-var path 			= require("path");
-var bodyParser 		= require("body-parser");
-var session			= require("express-session");
-var flash 			= require("connect-flash")
-var db 				= require("./models");
+var express    = require('express')
+var app        = express()
+var passport   = require('passport')
+var session    = require('express-session')
+var bodyParser = require('body-parser')
+var exphbs     = require('express-handlebars')
 
 var port = process.env.PORT || 8080;
 
-//attach bodyParser
-app.use(bodyParser.urlencoded({extended: true}));
+//For BodyParser
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cookieParser());
 
-//enable passport.js
-app.use(session({ secret: 'teamemergencrymedicalservices' }));
+
+ // For Passport
+app.use(session({ secret: 'team EMS',resave: true, saveUninitialized:true})); // session secret
 app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
-
-var routes = require("./controllers/routes.js");
-//connect router
-app.use("/",routes);
-
-//make static folder
-app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
+app.use(passport.session()); // persistent login sessions
 
 
-db.sequelize.sync().then(function() {
-	app.listen(port,function(){
-		console.log("listening on port "+ port);
-	});
+ //For Handlebars
+app.set('views', './public/views')
+app.engine('hbs', exphbs({extname: '.hbs'}));
+app.set('view engine', '.hbs');
+
+
+//Models
+var models = require("./models");
+
+
+//Routes
+var authRoute = require('./controllers/auth.js')(app,passport);
+
+
+//load passport strategies
+require('./config/passport/passport.js')(passport,models.user);
+
+
+//Sync Database
+   models.sequelize.sync().then(function(){
+console.log('Database connected')
+
+}).catch(function(err){
+console.log(err,"Database failure")
 });
+
+
+
+app.listen(port, function(err){
+    if(!err)
+    console.log("Site is live on " + port); else console.log(err)
+
+});
+
+
+
+

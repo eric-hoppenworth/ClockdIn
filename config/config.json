@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "root",  //Alter password to match your local db
+    "password": "Hyrule12",  
     "database": "Clockd_db", 
     "host": "127.0.0.1",
     "dialect": "mysql"
