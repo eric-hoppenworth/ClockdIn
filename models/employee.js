@@ -8,11 +8,8 @@ module.exports = function (sequelize, DataTypes) {
 		date_of_birth: {
 			type: DataTypes.DATE
 		},
-		email: {
-			type: DataTypes.STRING
-		},
-		password: {
-			type: DataType.STRING
+		is_manager:{
+			type: DataTypes.BOOLEAN
 		}
 	});
 	Employee.associate = function (models) {
@@ -21,15 +18,6 @@ module.exports = function (sequelize, DataTypes) {
 		Employee.hasMany(models.Shift, {
 			onDelete: "cascade"
 		});
-	};
-	//hash password db entries
-	Employee.methods.generateHash = function (password) {
-		return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-	};
-	//check if password is valid
-	Employee.methods.validPassword = function (password) {
-		return bcrypt.compareSync(password, this.local.password);
-
 	};
 
 	return Employee;

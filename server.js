@@ -23,10 +23,8 @@ require('./config/passport/passport.js')(passport,models.User);
 
 
  //For Handlebars
-app.set('views', './public/views')
-app.engine('hbs', exphbs({extname: '.hbs'}));
-app.set('view engine', '.hbs');
-
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 //Routes
 var routes = require("./controllers/routes.js");
