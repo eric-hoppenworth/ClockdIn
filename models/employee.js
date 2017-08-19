@@ -14,10 +14,6 @@ module.exports = function (sequelize, DataTypes) {
 		password: {
 			type: DataType.STRING
 		},
-		is_manager:{
-			type: DataTypes.BOOLEAN
-		}
-	});
 	Employee.associate = function (models) {
 		// We're saying that a Shift should belong to an Employee
 		// A Shift can't be created without an Employee due to the foreign key constraint
