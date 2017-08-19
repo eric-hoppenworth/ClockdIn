@@ -1,16 +1,25 @@
-const express = require("express");
-const path = require("path");
-const bodyParser = require("body-parser");
-var db = require("./models");
+var express 		= require("express");
+var app 			= express();
+var passport		= require("passport");
+var cookieParser	= require("cookie-parser");
+var path 			= require("path");
+var bodyParser 		= require("body-parser");
+var session			= require("express-session");
+var flash 			= require("connect-flash")
+var db 				= require("./models");
 
-var app = express();
-
+var port = process.env.PORT || 8080;
 
 //attach bodyParser
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
-var port = process.env.PORT || 8080;
+//enable passport.js
+app.use(session({ secret: 'teamemergencrymedicalservices' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 var routes = require("./controllers/routes.js");
 //connect router
