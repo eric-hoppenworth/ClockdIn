@@ -13,6 +13,9 @@ module.exports = function (sequelize, DataTypes) {
 		},
 		password: {
 			type: DataType.STRING
+		},
+		is_manager:{
+			type: DataTypes.BOOLEAN
 		}
 	});
 	Employee.associate = function (models) {
