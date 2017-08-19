@@ -7,6 +7,9 @@ var exphbs     = require('express-handlebars')
 
 var port = process.env.PORT || 8080;
 
+//Models
+var models = require("./models");
+
 //For BodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -16,6 +19,7 @@ app.use(bodyParser.json());
 app.use(session({ secret: 'team EMS',resave: true, saveUninitialized:true})); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
+require('./config/passport/passport.js')(passport,models.User);
 
 
  //For Handlebars
@@ -24,37 +28,35 @@ app.engine('hbs', exphbs({extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
 
-//Models
-var models = require("./models");
-
-
 //Routes
-var authRoute = require('./controllers/auth.js')(app,passport);
+var routes = require("./controllers/routes.js");
+app.use("/",routes);
+
+var authRoutes = require('./controllers/auth.js');
+app.use("/auth",authRoutes)
 
 
 //load passport strategies
-require('./config/passport/passport.js')(passport,models.user);
+
 
 
 //Sync Database
-   models.sequelize.sync().then(function(){
-console.log('Database connected')
+models.sequelize.sync().then(function(){
+	app.listen(port, function(err){
+	    if(!err){
+	    	console.log("Site is live on " + port);
+	    }
+	     else {
+	 		console.log(err);
+	 	}
+	});
 
-}).catch(function(err){
-console.log(err,"Database failure")
-});
+	})
+	.catch(function(err){
+		console.log(err,"Database failure")
+	}
+);
 
 
-
-app.listen(port, function(err){
-    if(!err)
-    console.log("Site is live on " + port); else console.log(err)
-
-});
-
-
-
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
 
 

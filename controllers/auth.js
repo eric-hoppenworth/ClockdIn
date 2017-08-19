@@ -1,55 +1,22 @@
+const db = require("../models");
+var router = require("express").Router();
+var path = require("path");
 
-//
-    //PLACE HOLDER ROUTING
-//
+const User = db.User;
 
-var authController = require('../controllers/authcontroller.js');
+//passport.authenticate
+router.route("/signup").post(
+	passport.authenticate('local-signup', {
+		successRedirect: '/dashboard',
+		failureRedirect: '/signup'
+	});
+);
 
+router.route("/signin").post(
+	passport.authenticate('local-signin', {
+		successRedirect: '/dashboard',
+		failureRedirect: '/signin'
+	}
+);
 
-module.exports = function(app, passport) {
-
-
-//    app.get('/signup', authController.signup);
-
-
-//    app.get('/signin', authController.signin);
-
-
-
-   //passport.authenticate 
-   app.post('/signup', passport.authenticate('local-signup', {
-           successRedirect: '/dashboard',
-
-           failureRedirect: '/signup'
-       }
-
-   ));
-
-
-//    app.get('/dashboard', isLoggedIn, authController.dashboard);
-
-
-
-//    app.get('/logout', authController.logout);
-
-
-   app.post('/signin', passport.authenticate('local-signin', {
-           successRedirect: '/dashboard',
-
-           failureRedirect: '/signin'
-       }
-
-   ));
-
-
-   function isLoggedIn(req, res, next) {
-
-       if (req.isAuthenticated())
-
-           return next();
-
-       res.redirect('/signin');
-
-   }
-
-}
+module.exports = router;
