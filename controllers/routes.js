@@ -7,9 +7,9 @@ const Employee = db.Employee;
 
 //HTML routing for home page
 router.route("/").get(function(req,res){
-	res.sendFile(path.resolve("public/test.html"));
+	//res.sendFile(path.resolve("public/test.html"));
+	res.render("index");
 });
-
 
 
 
