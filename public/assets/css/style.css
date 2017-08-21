@@ -1,3 +1,81 @@
+
+/* GENERAL */
+
+html, body {
+	height: 100%;
+    font-family: 'Raleway', sans-serif;
+    background: #333;
+}
+
+wrapper {
+    width: 90%;
+}
+
+.off-white-bg {
+    background-color: #fafafa;
+}
+
+/***** LOGIN PAGE *****/
+
+#splash-bg {
+	background: url('../img/splast_bg.png');
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#splash-container h1 {
+    color: #FAFAFA;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-modal {
+    height: 300px;
+    position: absolute;
+    top: 30%;
+    z-index: 100;
+}
+
 p{
 	color: steelblue;
+}
+
+/***** DASHBOARD PAGE *****/
+
+/* NAVBAR */
+
+
+nav {
+    box-shadow: none;
+    background-color: rgba(0,0,0,0);
+    color: #FAFAFA;
+    padding: 0 0.75rem;
+}
+
+nav .brand-logo {
+    color: #FAFAFA;
+}
+
+nav ul a {
+    color: #FAFAFA;
+}
+
+/* LEFT COLUMN */
+
+/* BADGES */
+
+.manager-badge {
+    padding: 6px;
+    height: 36PX;
+    width: 150px;
+    margin: 0 auto;
+    text-align: center;
+    background: rgb(63,169,245);
+    border: 1px solid #333;
+    border-radius: 20px;
 }
