@@ -4,6 +4,9 @@
 	</div>
 	<div class = "col-xs-9">
 		<div class = "row">
+			<div class = col-xs-2>
+				Employee Name
+			</div>
 			<div class = "col-xs-1 day">
 				Sunday 01
 			</div>
@@ -26,58 +29,5 @@
 				Saturday 07
 			</div>
 		</div>
-
-		<div class = "row">
-			<div class = "col-xs-1 day">
-				{{#each shifts}}
-					{{#compare day "===" "Sunday" }}
-						{{start_time}}
-					{{/compare}}
-				{{/each}}
-			</div>
-			<div class = "col-xs-1 day">
-				{{#each shifts}}
-					{{#compare day "===" "Monday" }}
-						{{start_time}}
-					{{/compare}}
-				{{/each}}
-			</div>
-			<div class = "col-xs-1 day">
-				{{#each shifts}}
-					{{#compare day "===" "Tuesday" }}
-						{{start_time}}
-					{{/compare}}
-				{{/each}}
-			</div>
-			<div class = "col-xs-1 day">
-				{{#each shifts}}
-					{{#compare day "===" "Wednesday" }}
-						{{start_time}}
-					{{/compare}}
-				{{/each}}
-			</div>
-			<div class = "col-xs-1 day">
-				{{#each shifts}}
-					{{#compare day "===" "Thursday" }}
-						{{start_time}}
-					{{/compare}}
-				{{/each}}
-			</div>
-			<div class = "col-xs-1 day">
-				{{#each shifts}}
-					{{#compare day "===" "Friday" }}
-						{{start_time}}
-					{{/compare}}
-				{{/each}}
-			</div>
-			<div class = "col-xs-1 day">
-				{{#each shifts}}
-					{{#compare day "===" "Saturday" }}
-						{{start_time}}
-					{{/compare}}
-				{{/each}}
-			</div>
-		</div>
-
 	</div>
 </div>
