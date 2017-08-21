@@ -88,7 +88,7 @@ router.route("/dashboard").get(function(req,res){
 	];
 	var weekDates = [];
 	//insert dates for checking against(starts on the first day of the current week)
-	for (var i = 0; i < 6; i ++){
+	for (var i = 0; i < 7; i ++){
 		weekDates.push(moment().startOf('week').add(i,"day").format("MM-DD-YYYY"));
 	}
 	//build Objects for entering into the template.
@@ -100,7 +100,7 @@ router.route("/dashboard").get(function(req,res){
 		var myRow = {};
 		myRow.name = myEmployee.name;
 		myRow.days = [];
-		for (var j = 0; j < 6; j++){
+		for (var j = 0; j < 7; j++){
 			myRow.days[j] = [];
 			for (var k = 0; k < myEmployee.Shifts.length ; k++){
 				var myShift = myEmployee.Shifts[k];
@@ -120,7 +120,8 @@ router.route("/dashboard").get(function(req,res){
 	}
 	//send to Template for rendering.
 	//currently it just sends to the browser
-	res.json(templateData);
+	//res.json(templateData);
+	res.render("dashboard",{employee: templateData.rows})
 });
 
 

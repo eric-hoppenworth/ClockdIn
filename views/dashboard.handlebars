@@ -1,33 +1,55 @@
 <div class = "row">
-	<div class = "col-xs-3">
+	<div class = "col s3">
 		<!-- empty collumn -->
 	</div>
-	<div class = "col-xs-9">
+	<div class = "col s9">
 		<div class = "row">
-			<div class = col-xs-2>
+			<div class = "col s2">
 				Employee Name
 			</div>
-			<div class = "col-xs-1 day">
+			<div class = "col s1 day">
 				Sunday 01
 			</div>
-			<div class = "col-xs-1 day">
+			<div class = "col s1 day">
 				Monday 02
 			</div>
-			<div class = "col-xs-1 day">
+			<div class = "col s1 day">
 				Tuesday 03
 			</div>
-			<div class = "col-xs-1 day">
+			<div class = "col s1 day">
 				Wednesday 04
 			</div>
-			<div class = "col-xs-1 day">
+			<div class = "col s1 day">
 				Thursday 05
 			</div>
-			<div class = "col-xs-1 day">
+			<div class = "col s1 day">
 				Friday 06
 			</div>
-			<div class = "col-xs-1 day">
+			<div class = "col s1 day">
 				Saturday 07
 			</div>
 		</div>
+		<!-- Start of employee Rows -->
+		{{#each employee}}
+		<div class="row">
+			<div class = "col s2">
+				{{name}}
+			</div>
+
+			{{#each days}}
+			<div class = "col s1">
+				{{#if this}}
+					{{#each this}}
+				<!-- lOAD IN PARTIAL -->
+				<p>{{this.start}} - {{this.end}}</p>
+				<p>{{this.position}}</p>
+					{{/each}}
+				{{/if}}
+			</div>
+			{{/each}}
+
+		</div>
+		{{/each}}
+
 	</div>
 </div>
