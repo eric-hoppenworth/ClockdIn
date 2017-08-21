@@ -3,7 +3,16 @@
 
 html, body {
 	height: 100%;
-	font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif;
+    background: #333;
+}
+
+wrapper {
+    width: 90%;
+}
+
+.off-white-bg {
+    background-color: #fafafa;
 }
 
 /***** LOGIN PAGE *****/
@@ -34,4 +43,39 @@ html, body {
 
 p{
 	color: steelblue;
+}
+
+/***** DASHBOARD PAGE *****/
+
+/* NAVBAR */
+
+
+nav {
+    box-shadow: none;
+    background-color: rgba(0,0,0,0);
+    color: #FAFAFA;
+    padding: 0 0.75rem;
+}
+
+nav .brand-logo {
+    color: #FAFAFA;
+}
+
+nav ul a {
+    color: #FAFAFA;
+}
+
+/* LEFT COLUMN */
+
+/* BADGES */
+
+.manager-badge {
+    padding: 6px;
+    height: 36PX;
+    width: 150px;
+    margin: 0 auto;
+    text-align: center;
+    background: rgb(63,169,245);
+    border: 1px solid #333;
+    border-radius: 20px;
 }
