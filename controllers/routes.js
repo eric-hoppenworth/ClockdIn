@@ -74,11 +74,21 @@ router.route("/dashboard").get(function(req,res){
 	    {
 	        "name": "Chris",
 	        "is_manager": true,
+	        // The first shift should not show up because it is not happening this week
 	        "Shifts": [{
                 "id": 1,
                 "start_time": "09:00:00",
                 "end_time": "16:00:00",
                 "date": "2017-08-15T04:00:00.000Z",
+                "position": "Kitchen",
+                "createdAt": "2017-08-19T19:13:14.000Z",
+                "updatedAt": "2017-08-19T19:13:14.000Z",
+                "EmployeeId": 2
+            },{
+                "id": 1,
+                "start_time": "09:00:00",
+                "end_time": "16:00:00",
+                "date": "2017-08-26T04:00:00.000Z",
                 "position": "Kitchen",
                 "createdAt": "2017-08-19T19:13:14.000Z",
                 "updatedAt": "2017-08-19T19:13:14.000Z",
@@ -90,6 +100,11 @@ router.route("/dashboard").get(function(req,res){
 	//insert dates for checking against(starts on the first day of the current week)
 	for (var i = 0; i < 7; i ++){
 		weekDates.push(moment().startOf('week').add(i,"day").format("MM-DD-YYYY"));
+	}
+	//properly formated dates for display on page
+	var formatedDates = [];
+	for (var i = 0; i < 7; i ++){
+		formatedDates.push(moment().startOf('week').add(i,"day").format("MMM D ddd"));
 	}
 	//build Objects for entering into the template.
 	var templateData = {
@@ -109,8 +124,8 @@ router.route("/dashboard").get(function(req,res){
 				//if this shift happens to be on this day...
 				if(weekDates[j] === myDate){
 					var shift = {};
-					shift.start = myShift.start_time;
-					shift.end = myShift.end_time;
+					shift.start = moment(myShift.start_time,"HH:mm:ss").format("h:mm a");
+					shift.end = moment(myShift.end_time,"HH:mm:ss").format("h:mm a");
 					shift.position = myShift.position;
 					myRow.days[j].push(shift);
 				}
@@ -118,10 +133,12 @@ router.route("/dashboard").get(function(req,res){
 		}
 		templateData.rows.push(myRow);
 	}
+	//attach week dates
+	templateData.formatedDates = formatedDates;
 	//send to Template for rendering.
 	//currently it just sends to the browser
 	//res.json(templateData);
-	res.render("dashboard",{employee: templateData.rows})
+	res.render("dashboard",{data: templateData})
 });
 
 
