@@ -1,3 +1,37 @@
+
+/* GENERAL */
+
+html, body {
+	height: 100%;
+	font-family: 'Raleway', sans-serif;
+}
+
+/***** LOGIN PAGE *****/
+
+#splash-bg {
+	background: url('../img/splast_bg.png');
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#splash-container h1 {
+    color: #FAFAFA;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-modal {
+    height: 300px;
+    position: absolute;
+    top: 30%;
+    z-index: 100;
+}
+
 p{
 	color: steelblue;
 }
