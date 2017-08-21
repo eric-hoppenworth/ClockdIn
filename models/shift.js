@@ -1,13 +1,20 @@
 module.exports = function(sequelize,DataTypes){
 	var Shift = sequelize.define("Shift",{
 		start_time:{
-			type: DataTypes.TIME
+			type: DataTypes.TIME,
+			allowNull: false
 		},
 		end_time: {
-			type: DataTypes.TIME
+			type: DataTypes.TIME,
+			allowNull: false
 		},
 		date:{
-			type: DataTypes.DATE
+			type: DataTypes.DATE,
+			allowNull: false
+		},
+		position:{
+			type: DataTypes.STRING,
+			defaultValue: "other"
 		}
 	});
 	Shift.associate = function(models) {

@@ -1,6 +1,7 @@
 const db = require("../models");
 var router = require("express").Router();
 var path = require("path");
+var moment = require("moment");
 
 const Shift = db.Shift;
 const Employee = db.Employee;
@@ -12,24 +13,115 @@ router.route("/").get(function(req,res){
 });
 
 router.route("/dashboard").get(function(req,res){
-	var myShifts = [
-		{
-			start_time: "9:00",
-			end_time: "14:00",
-			day: "Monday"
-		},{
-			start_time: "10:00",
-			end_time: "15:00",
-			day: "Tuesday"
-		},
-		{
-			start_time: "14:00",
-			end_time: "20:00",
-			day: "Thursday"
-		}
+	//This is in testing phase.
+	//this is the object that is retrieved from the database.
+	//for testing, I have used a hard coded object.
+	var dbData = [
+	    {
+	        "name": "Eric",
+	        "is_manager": false,
+	        "Shifts": [
+	            {
+	                "id": 1,
+	                "start_time": "09:00:00",
+	                "end_time": "13:00:00",
+	                "date": "2017-08-15T04:00:00.000Z",
+	                "position": "Sushi",
+	                "createdAt": "2017-08-19T19:13:14.000Z",
+	                "updatedAt": "2017-08-19T19:13:14.000Z",
+	                "EmployeeId": 1
+	            },
+	            {
+	                "id": 2,
+	                "start_time": "09:00:00",
+	                "end_time": "13:00:00",
+	                "date": "2017-08-25T04:00:00.000Z",
+	                "position": "Sushi",
+	                "createdAt": "2017-08-19T19:14:29.000Z",
+	                "updatedAt": "2017-08-19T19:14:29.000Z",
+	                "EmployeeId": 1
+	            },
+	            {
+	                "id": 3,
+	                "start_time": "09:00:00",
+	                "end_time": "13:00:00",
+	                "position": "BAP",
+	                "date": "2017-08-22T04:00:00.000Z",
+	                "createdAt": "2017-08-19T19:14:53.000Z",
+	                "updatedAt": "2017-08-19T19:14:53.000Z",
+	                "EmployeeId": 1
+	            },
+	            {
+	                "id": 4,
+	                "start_time": "09:00:00",
+	                "end_time": "13:00:00",
+	                "date": "2017-08-21T04:00:00.000Z",
+	                "createdAt": "2017-08-21T01:36:07.000Z",
+	                "updatedAt": "2017-08-21T01:36:07.000Z",
+	                "EmployeeId": 1
+	            },
+	            {
+	                "id": 5,
+	                "start_time": "09:00:00",
+	                "end_time": "13:00:00",
+	                "date": "2017-08-28T04:00:00.000Z",
+	                "createdAt": "2017-08-21T01:36:14.000Z",
+	                "updatedAt": "2017-08-21T01:36:14.000Z",
+	                "EmployeeId": 1
+	            }
+	        ]
+	    },
+	    {
+	        "name": "Chris",
+	        "is_manager": true,
+	        "Shifts": [{
+                "id": 1,
+                "start_time": "09:00:00",
+                "end_time": "16:00:00",
+                "date": "2017-08-15T04:00:00.000Z",
+                "position": "Kitchen",
+                "createdAt": "2017-08-19T19:13:14.000Z",
+                "updatedAt": "2017-08-19T19:13:14.000Z",
+                "EmployeeId": 2
+            }]
+	    }
 	];
-	res.render("dashboard",{ shifts: myShifts });
-})
+	var weekDates = [];
+	//insert dates for checking against(starts on the first day of the current week)
+	for (var i = 0; i < 6; i ++){
+		weekDates.push(moment().startOf('week').add(i,"day").format("MM-DD-YYYY"));
+	}
+	//build Objects for entering into the template.
+	var templateData = {
+		rows: []
+	};
+	for(var i = 0; i < dbData.length;i++){
+		var myEmployee = dbData[i];
+		var myRow = {};
+		myRow.name = myEmployee.name;
+		myRow.days = [];
+		for (var j = 0; j < 6; j++){
+			myRow.days[j] = [];
+			for (var k = 0; k < myEmployee.Shifts.length ; k++){
+				var myShift = myEmployee.Shifts[k];
+				var myDate = myShift.date;
+				myDate = moment(myDate).format("MM-DD-YYYY");
+				//if this shift happens to be on this day...
+				if(weekDates[j] === myDate){
+					var shift = {};
+					shift.start = myShift.start_time;
+					shift.end = myShift.end_time;
+					shift.position = myShift.position;
+					myRow.days[j].push(shift);
+				}
+			}
+		}
+		templateData.rows.push(myRow);
+	}
+	//send to Template for rendering.
+	//currently it just sends to the browser
+	res.json(templateData);
+});
 
 
 /////////////////////////////////
@@ -76,7 +168,7 @@ router.route("/api/shifts").get(function(req,res){
 	Shift.findAll({
 		include: [{
 			model: Employee,
-			attributes: ["name","is_manager"]
+			attributes: ["name","is_manager","id"]
 		}]
 	}).then(data => res.json(data) );
 });
@@ -92,6 +184,27 @@ router.route("/api/shifts/:id").get(function(req,res){
 			id: myId
 		}
 	}).then(data => res.json(data) );
+});
+
+router.route("/api/employee").get(function(req,res){
+	Employee.findAll({
+		attributes: ["name","is_manager"],
+		include: [{
+			model: Shift
+		}]
+	}).then(data => res.json(data));
+});
+
+//this route will be used to fill the weekly schedule
+router.route("/api/employee/:weekStart").get(function(req,res){
+	//week start should come in as a string "mm-dd-yyyy"
+	//We will need a where clause to ensure that each shift's ".date" is between weekStart and weekEnd
+	Employee.findAll({
+		attributes: ["name","is_manager"],
+		include: [{
+			model: Shift
+		}]
+	}).then(data => res.json(data));
 });
 
 
