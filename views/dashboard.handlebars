@@ -1,33 +1,54 @@
-<div class = "row">
-	<div class = "col-xs-3">
-		<!-- empty collumn -->
-	</div>
-	<div class = "col-xs-9">
-		<div class = "row">
-			<div class = col-xs-2>
-				Employee Name
-			</div>
-			<div class = "col-xs-1 day">
-				Sunday 01
-			</div>
-			<div class = "col-xs-1 day">
-				Monday 02
-			</div>
-			<div class = "col-xs-1 day">
-				Tuesday 03
-			</div>
-			<div class = "col-xs-1 day">
-				Wednesday 04
-			</div>
-			<div class = "col-xs-1 day">
-				Thursday 05
-			</div>
-			<div class = "col-xs-1 day">
-				Friday 06
-			</div>
-			<div class = "col-xs-1 day">
-				Saturday 07
-			</div>
-		</div>
-	</div>
+<div class="row">
+
+            <div class="col s3 col-1 emp-card">
+                <div class="col s12">
+                    <div class="card off-white-bg">
+                        <div class="profile-pic"></div>
+                        <div class="card-content">
+                            <span class="card-title name">John Smith</span>
+                            <div class="manager-badge">Manager</div>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s9 col-2 emp-month-card">
+				<div class = "row">
+					<div class = "col s2">
+						Employee Name
+					</div>
+					{{#each data.formatedDates}}
+					<div class = "col s1 day">
+						{{this}}
+					</div>
+					{{/each}}
+				</div>
+				<!-- Start of employee Rows -->
+				{{#each data.rows}}
+				<div class="row">
+					<div class = "col s2">
+						{{name}}
+					</div>
+
+					{{#each days}}
+					<div class = "col s1">
+						{{#if this}}
+							{{#each this}}
+							<!-- Load in shift partial -->
+								{{> shifts}}
+							{{/each}}
+						{{/if}}
+					</div>
+					{{/each}}
+
+				</div>
+				{{/each}}
+            </div>
+
+        </div>
+
 </div>
