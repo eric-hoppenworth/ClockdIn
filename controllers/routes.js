@@ -56,11 +56,15 @@ router.route("/shifts/update").post(function(){
 // ADD OR UPDATE EMPLOYEES //////
 /////////////////////////////////
 
-router.route("/employee/add").post(function(req,res){
+router.route("/employees/add").post(function(req,res){
 	//no code yet
+	var newEmployee = req.body;
+
+	Employee.create(newEmployee)
+		.then(data => res.json(data))
 });
 
-router.route("/employee/update").post(function(req,res){
+router.route("/employees/update").post(function(req,res){
 	//no code yet
 });
 
@@ -69,7 +73,7 @@ router.route("/employee/update").post(function(req,res){
 /////////////////////////////////
 
 router.route("/api/shifts").get(function(req,res){
-	Shifts.findAll({
+	Shift.findAll({
 		include: [{
 			model: Employee,
 			attributes: ["name","is_manager"]
@@ -79,7 +83,7 @@ router.route("/api/shifts").get(function(req,res){
 
 router.route("/api/shifts/:id").get(function(req,res){
 	var myId = req.params.id;
-	Shifts.findOne({
+	Shift.findOne({
 		include: [{
 			model: Employee,
 			attributes: ["name","is_manager"]
