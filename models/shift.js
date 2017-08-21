@@ -1,10 +1,10 @@
 module.exports = function(sequelize,DataTypes){
 	var Shift = sequelize.define("Shift",{
 		start_time:{
-			type: DataTypes.DATE
+			type: DataTypes.TIME
 		},
 		end_time: {
-			type: DataTypes.DATE
+			type: DataTypes.TIME
 		},
 		date:{
 			type: DataTypes.DATE
