@@ -9,7 +9,7 @@ const Employee = db.Employee;
 //HTML routing for home page
 router.route("/").get(function(req,res){
 	//res.sendFile(path.resolve("public/test.html"));
-	res.render("index");
+	res.render("splash");
 });
 
 router.route("/dashboard").get(function(req,res){
@@ -214,7 +214,7 @@ router.route("/api/employee").get(function(req,res){
 });
 
 //this route will be used to fill the weekly schedule
-router.route("/api/employee/:weekStart").get(function(req,res){
+router.route("/api/employees/:weekStart").get(function(req,res){
 	//week start should come in as a string "mm-dd-yyyy"
 	//We will need a where clause to ensure that each shift's ".date" is between weekStart and weekEnd
 	Employee.findAll({
