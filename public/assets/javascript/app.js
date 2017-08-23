@@ -6,6 +6,7 @@ $(document).ready(function() {
     $("#addShift").modal();
     $("#addEmployee").modal();
     $("#alert").modal();
+    $('#modal2').modal();
 });
 
 
@@ -30,4 +31,18 @@ $("#empSubmit").on("click",function(){
 
 $("#alertClear").on("click",function(){
 	$("#alertClear .modal-content").empty();
+});
+
+var datetime = null,
+        date = null;
+
+var update = function () {
+    date = moment(new Date())
+    datetime.html(date.format('MMMM Do YYYY, h:mm:ss a'));
+};
+
+$(document).ready(function(){
+    datetime = $('#current-time-display')
+    update();
+    setInterval(update, 1000);
 });
