@@ -1,7 +1,11 @@
 {
   "development": {
     "username": "root",
-    "password": "Rice3773",  
+<<<<<<< HEAD
+    "password": "Hyrule12",  
+=======
+    "password": "",  
+>>>>>>> c64f96c7b2e391533f1382e9dc1f9d8c8e602e80
     "database": "Clockd_db", 
     "host": "127.0.0.1",
     "dialect": "mysql"

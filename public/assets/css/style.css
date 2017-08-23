@@ -15,17 +15,22 @@ wrapper {
     background-color: #fafafa;
 }
 
+.text-blue {
+    color: #3fc5ff;
+}
+
 /***** LOGIN PAGE *****/
 
 #splash-bg {
-	background: url('../img/splast_bg.png');
-    height: 100%; 
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+	background: linear-gradient(0deg, #3fc5ff 0%, #2b66dd 75%);
+    height: 100vh; 
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#splash-container {
+    margin-top: -100px;
 }
 
 #splash-container h1 {
@@ -41,14 +46,46 @@ wrapper {
     z-index: 100;
 }
 
-p{
-	color: steelblue;
+.login-btn {
+    background: #fafafa;
+    color: #333;
+    margin: 0 auto;
+    display: inherit;
+}
+
+.login-btn:hover {
+    background: rgb(63,169,245);
+    color: #fafafa;
+}
+
+.sign-up {
+    color: #fafafa;
+    display: inherit;
+    text-align: center;
+    width: 60px;
+    margin: -15px auto;
+}
+
+.sign-up:hover {
+    color: #333;
+    transition: color 0.5s ease;
+}
+
+#current-time-display {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 2%;
+    font-size: 6vw;
+    text-align: center;
+    font-weight: 700;
+    color: #3fa9f5;
 }
 
 /***** DASHBOARD PAGE *****/
 
 /* NAVBAR */
-
 
 nav {
     box-shadow: none;
@@ -63,6 +100,31 @@ nav .brand-logo {
 
 nav ul a {
     color: #FAFAFA;
+}
+
+.chat-btn {
+    position: relative;
+    width: 125px;
+    height: 40px;
+    border-radius: 5px;
+    background: #fafafa;
+}
+
+.chat-btn span {
+    position: absolute;
+    top: -9px;
+    left: 10px;
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #3fa9f5;
+}
+
+.chat-img {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 15px;
+    bottom: -15px;
 }
 
 /* LEFT COLUMN */

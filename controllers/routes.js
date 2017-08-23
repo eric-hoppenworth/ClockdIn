@@ -204,23 +204,32 @@ router.route("/api/shifts/:id").get(function(req,res){
 	}).then(data => res.json(data) );
 });
 
-router.route("/api/employee").get(function(req,res){
-	Employee.findAll({
-		attributes: ["name","is_manager"],
-		include: [{
-			model: Shift
-		}]
-	}).then(data => res.json(data));
-});
-
 //this route will be used to fill the weekly schedule
-router.route("/api/employee/:weekStart").get(function(req,res){
+router.route("/api/employee/:weekStart?").get(function(req,res){
 	//week start should come in as a string "mm-dd-yyyy"
 	//We will need a where clause to ensure that each shift's ".date" is between weekStart and weekEnd
+
+	var weekStart;
+	var weekEnd;
+
+	if (!req.params.weekStart) {
+		weekStart = moment().startOf('week');
+		weekEnd = moment().endOf('week');
+	} else {
+		weekStart = moment(req.params.weekStart).startOf('week');
+		weekEnd = moment(weekStart).endOf("week");
+	
+	}
+	
 	Employee.findAll({
 		attributes: ["name","is_manager"],
 		include: [{
-			model: Shift
+			model: Shift,
+			where: {
+				date: {
+					$gt: weekStart,
+					$lt: weekEnd				}
+			}
 		}]
 	}).then(data => res.json(data));
 });
