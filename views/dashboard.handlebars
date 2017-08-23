@@ -67,11 +67,27 @@
 
 <div id="addShift" class="modal modal-fixed-footer login-modal">
     <div class="modal-content">
-		<input type="text" name="">
+		<select id = "shiftName">
+			{{#each data.employees}}
+  			<option value="{{id}}">{{name}}</option>
+  			{{/each}}
+		</select>
+
+		<input id="shiftStart" type="time" class="validate">
+        <label for="shiftStart">Start Time</label>
+
+        <input id="shiftEnd" type="time" class="validate">
+        <label for="shiftEnd">End Time</label>
+
+        <input id="shiftDate" type="date" class="validate">
+        <label for="shiftDate">Date</label>
+
+        <input id="shiftPosition" type="text" class="validate">
+        <label for="shiftPosition">Position</label>
     </div>
     <div class="modal-footer">
         <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Login</a>
+        <p id="shiftSubmit" class="modal-action modal-close waves-effect waves-green btn-flat ">Submit</p>
     </div>
 </div>
 
@@ -80,7 +96,7 @@
 		<input id="empName" type="text" class="validate">
         <label for="empName">Employee Name</label>
 
-        <input id="empDob" type="text" class="validate">
+        <input id="empDob" type="date" class="validate">
         <label for="empDob">Date of Birth</label>
 		<br>
         <input id="empManager" type="checkbox" class="validate">
