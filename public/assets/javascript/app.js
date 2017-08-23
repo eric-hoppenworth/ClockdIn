@@ -7,6 +7,7 @@ $(document).ready(function() {
     $("#addEmployee").modal();
     $("#alert").modal();
     $('#modal2').modal();
+    $("select").material_select();
 });
 
 
@@ -29,8 +30,21 @@ $("#empSubmit").on("click",function(){
 	$("#empDob").val("");
 });
 
+$("#shiftSubmit").on("click",function(){
+	var myShift = {};
+	myShift.start_time = $("#shiftStart").val();
+	myShift.end_time = $("#shiftEnd").val();
+	myShift.date = moment($("#shiftDate").val(),"YYYY-MM-DD").add(1,"hour").format();
+	myShift.position = $("#shiftPosition").val();
+	myShift.EmployeeId = $("#shiftName").val();
+	$.post("/shifts/add",myShift,function(data,err){
+		console.log("done");
+	});
+});
+
+
 $("#alertClear").on("click",function(){
-	$("#alertClear .modal-content").empty();
+	$("#alert .modal-content").empty();
 });
 
 var datetime = null,

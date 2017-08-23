@@ -15,6 +15,10 @@ module.exports = function(sequelize,DataTypes){
 		position:{
 			type: DataTypes.STRING,
 			defaultValue: "other"
+		},
+		EmployeeId: {
+			type: DataTypes.INTEGER,
+			allowNull: false
 		}
 	});
 	Shift.associate = function(models) {
