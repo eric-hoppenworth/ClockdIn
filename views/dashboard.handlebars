@@ -30,40 +30,64 @@
 		<!-- This is the dynamically loaded calendar.  It shows all shifts for all employees -->
 		<!-- I may want to add id's somewhere in here -->
         <div class="col s9 col-2 emp-month-card">
-			<div class = "row">
-				<div class = "col s2">
-					Employee Name
-				</div>
-				{{#each data.formatedDates}}
-				<div class = "col s1 day">
-					{{this}}
-				</div>
-				{{/each}}
-			</div>
-			<!-- Start of employee Rows -->
-			{{#each data.rows}}
-			<div class="row">
-				<div class = "col s2">
-					{{name}}
-				</div>
-
-				{{#each days}}
-				<div class = "col s1">
-					{{#if this}}
-						{{#each this}}
-						<!-- Load in shift partial -->
-							{{> shifts}}
-						{{/each}}
-					{{/if}}
-				</div>
-				{{/each}}
-
-			</div>
-			{{/each}}
+            <div class="col s12">
+                <div class="card gradient-blue-bg calendar-card">
+                    <div class="color-bar"></div>
+                    <div class="sched-header">
+                        <p>Scheduler</p>
+                        <div class="week-month-wrapper">
+                            <div class="week-btn">Week</div>
+                            <div class="separator"></div>
+                            <div class="month-btn week-month-selected">Month</div>
+                        </div>
+                    </div>
+                    <div class="row month-row">
+                        <div class="col s4 arrows left-arrow"><i class="sm-md material-icons float-right">chevron_left</i></div>
+                        <div class="col s4 month-display">September 23-30</div>
+                        <div class="col s4 arrows right-arrow"><i class="sm-md material-icons float-left">chevron_right</i></div>
+                    </div>
+                    <div id="calendar-container">
+                        <div id="week-calendar">
+                        	<table>
+                                <thead>
+                                    <tr>
+                                        <th class="table-name">Name</th>
+                                        {{#each data.formatedDates}}
+										<th class = "table-day">
+											{{this}}
+										</th>
+										{{/each}}
+                                    </tr>
+                                </thead>
+								<tbody>
+									{{#each data.rows}}
+                                    <tr>
+                                        <td>{{name}}</td>
+                                        {{#each days}}
+											{{#if this}}
+											<td class = "days-with-schedule">
+												{{#each this}}
+												<!-- Load in shift partial -->
+													{{> shifts}}
+												{{/each}
+											</td>
+											{{else}}
+											<td></td>
+											{{/if}}
+										</td>
+										{{/each}}
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
 </div>
+	
 
 <div id="addShift" class="modal modal-fixed-footer login-modal">
     <div class="modal-content">
