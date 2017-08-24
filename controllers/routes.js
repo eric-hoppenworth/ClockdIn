@@ -80,8 +80,9 @@ router.route("/dashboard/:weekStart?").get(function(req,res){
 		}
 		//attach week dates
 		templateData.formatedDates = formatedDates;
-		templateData.button.back = weekStart.add(-1,"day");
-		templateData.button.forward = weekEnd.add(1,"day");
+		templateData.button = {};
+		templateData.button.back = weekStart.add(-1,"day").format();
+		templateData.button.forward = weekEnd.add(1,"day").format();
 		//perform second query to get all employees
 		Employee.findAll({
 			attributes: ["id","name","is_manager"]
@@ -89,6 +90,7 @@ router.route("/dashboard/:weekStart?").get(function(req,res){
 			templateData.employees = empData;
 			//send to Template for rendering.
 			//currently it just sends to the browser
+			//res.json(templateData);
 			res.render("dashboard",{data: templateData});
 		});
 		

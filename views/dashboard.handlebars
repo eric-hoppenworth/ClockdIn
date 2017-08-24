@@ -42,9 +42,13 @@
                         </div>
                     </div>
                     <div class="row month-row">
-                        <div class="col s4 arrows left-arrow"><i class="sm-md material-icons float-right">chevron_left</i></div>
+                        <div data-value="{{data.button.back}}" class="col s4 arrows left-arrow">
+                        	<i class="sm-md material-icons float-right">chevron_left</i>
+                        </div>
                         <div class="col s4 month-display">September 23-30</div>
-                        <div class="col s4 arrows right-arrow"><i class="sm-md material-icons float-left">chevron_right</i></div>
+                        <div data-value="{{data.button.forward}}" class="col s4 arrows right-arrow">
+                        	<i class="sm-md material-icons float-left">chevron_right</i>
+                        </div>
                     </div>
                     <div id="calendar-container">
                         <div id="week-calendar">
@@ -63,19 +67,18 @@
 									{{#each data.rows}}
                                     <tr>
                                         <td>{{name}}</td>
-                                        {{#each days}}
-											{{#if this}}
-											<td class = "days-with-schedule">
-												{{#each this}}
-												<!-- Load in shift partial -->
-													{{> shifts}}
-												{{/each}
-											</td>
+                                        {{#days}}
+	                                        {{#if this}}
+												<td class = "days-with-schedule">
+													{{#each this}}
+														{{> shifts}}
+													{{/each}}
+												</td>
 											{{else}}
 											<td></td>
 											{{/if}}
-										</td>
-										{{/each}}
+                                        {{/days}}
+
                                     </tr>
                                     {{/each}}
                                 </tbody>
