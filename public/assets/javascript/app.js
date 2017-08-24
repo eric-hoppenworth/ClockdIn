@@ -22,3 +22,16 @@ $(document).ready(function(){
     update();
     setInterval(update, 1000);
 });
+
+$(".month-btn").click( function() {
+    $(this).addClass("week-month-selected");
+    $(".week-btn").removeClass("week-month-selected");
+  });
+
+$(".week-btn").click( function() {
+    $(this).addClass("week-month-selected");
+    $(".month-btn").removeClass("week-month-selected");
+  });
+
+
+
