@@ -1,7 +1,7 @@
 {{> navbar}}
 <div class="row">
 	<!-- This needs to be loaded in dynamically as well -->
-    {{> nameWidget}}
+    {{> nameWidget data=data.userInfo}}
 	<!-- This is the dynamically loaded calendar.  It shows all shifts for all employees -->
 	<!-- I may want to add id's somewhere in here -->
     <div class="col s9 col-2 emp-month-card">

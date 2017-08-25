@@ -8,7 +8,6 @@ const Shift = db.Shift;
 const Employee = db.Employee;
 module.exports = function (router, passport) {
 
-
 	//HTML routing for home page
 	router.route("/").get(function (req, res) {
 		//res.sendFile(path.resolve("public/test.html"));
@@ -132,26 +131,12 @@ router.route("/day/:dayStart?").get(function(req,res){
 			res.render("dashboard",{data: templateData});
 		});
 	});
-});
 
-	router.route("/day/:dayStart?").get(function (req, res) {
-		//TESTING
-		var dayStart;
-		var dayEnd;
-		if (!req.params.dayStart) {
-			dayStart = moment().hour(6);
-			dayEnd = moment(dayStart).add(23, "hour");
-		} else {
-			dayStart = moment(req.params.dayStart).hour(6);
-			dayEnd = "dasd";
-		}
-	});
 	// passport.authenticate("local-signin")
 	router.get("/dashboard/:weekStart?", isLoggedIn, function (req, res) {
 		console.log(req.user);
 		var weekStart;
 		var weekEnd;
-
 		if (!req.params.weekStart) {
 			weekStart = moment().startOf('week');
 			weekEnd = moment().endOf('week');
@@ -246,7 +231,6 @@ router.route("/day/:dayStart?").get(function(req,res){
 
 	router.route("/shifts/update").post(function () {
 		var myShift = req.body;
-
 		Shift.update(myShift, {
 			where: {
 				id: myShift.id
@@ -261,7 +245,6 @@ router.route("/day/:dayStart?").get(function(req,res){
 	router.route("/employees/add").post(function (req, res) {
 		//no code yet
 		var newEmployee = req.body;
-
 		Employee.create(newEmployee)
 			.then(data => res.json(data))
 	});
