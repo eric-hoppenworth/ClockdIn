@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "Rice3773",  
+    "password": "Hyrule12",  
     "database": "Clockd_db", 
     "host": "127.0.0.1",
     "dialect": "mysql"
