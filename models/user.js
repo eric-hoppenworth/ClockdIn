@@ -38,7 +38,7 @@ module.exports = function(sequelize, Sequelize) {
 			imageURL:{
 				type: Sequelize.STRING,
 				allowNull: true,
-				defaultValue: "../public/assets/images/ClockdInAppIcon.png"
+				defaultValue: "/assets/images/ClockdInAppIcon.png"
 			}
 	   });
 	   User.associate = function(models) {
