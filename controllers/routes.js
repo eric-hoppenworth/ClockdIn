@@ -27,7 +27,6 @@ router.route("/dashboard/:weekStart?").get(function(req,res){
 		weekEnd = moment(weekStart).endOf("week");
 	
 	}
-	
 	Employee.findAll({
 		attributes: ["name","is_manager"],
 		include: [{
@@ -44,12 +43,12 @@ router.route("/dashboard/:weekStart?").get(function(req,res){
 		var weekDates = [];
 		//insert dates for checking against(starts on the first day of the current week)
 		for (var i = 0; i < 7; i ++){
-			weekDates.push(moment().startOf('week').add(i,"day").format("MM-DD-YYYY"));
+			weekDates.push(moment(weekStart).add(i,"day").format("MM-DD-YYYY"));
 		}
 		//properly formated dates for display on page
 		var formatedDates = [];
 		for (var i = 0; i < 7; i ++){
-			formatedDates.push(moment().startOf('week').add(i,"day").format("MMM D ddd"));
+			formatedDates.push(moment(weekStart).add(i,"day").format("MMM D ddd"));
 		}
 		//build Objects for entering into the template.
 		var templateData = {

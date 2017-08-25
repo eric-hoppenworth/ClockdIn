@@ -22,6 +22,9 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 require('./config/passport/passport.js')(passport,models.User);
 
+//make static folder
+app.use('/assets', express.static(path.join(__dirname, '/public/assets')));
+
 //load helpers
 var handlebars  = require('./helpers/helpers.js')(exphbs);
  //For Handlebars
@@ -29,9 +32,6 @@ var handlebars  = require('./helpers/helpers.js')(exphbs);
 app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
 
-
-//make static folder
-app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 //Routes
 var routes = require("./controllers/routes.js");
