@@ -22,6 +22,7 @@ module.exports = function (router, passport) {
 
 		}
 	);
+
 	router.post('/auth/login', passport.authenticate('local-signin', {
 			successRedirect: '/auth/success',
 			failureRedirect: '/auth/failure'
@@ -76,7 +77,6 @@ module.exports = function (router, passport) {
 			var myDay = req.params.dayStart;
 			var checkStart = moment(myDay).hour(6);
 			var checkEnd = moment(checkStart).add(1, "hour");
-
 			var templateData = {
 				rows: []
 			};
@@ -235,7 +235,6 @@ module.exports = function (router, passport) {
 			});
 		});
 	});
-
 
 	/////////////////////////////////
 	// ADD OR UPDATE SHIFTS /////////
