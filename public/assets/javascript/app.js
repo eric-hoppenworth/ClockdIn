@@ -36,7 +36,7 @@ $("#shiftSubmit").on("click",function(){
 	var myShift = {};
 	myShift.start_time = $("#shiftStart").val();
 	myShift.end_time = $("#shiftEnd").val();
-	myShift.date = moment($("#shiftDate").val(),"YYYY-MM-DD").add(1,"hour").format();
+	myShift.date = moment($("#shiftDate").val(),"YYYY-MM-DD").hour(12).format();
 	myShift.position = $("#shiftPosition").val();
 	myShift.EmployeeId = $("#shiftName").val();
 	$.post("/shifts/add",myShift,function(data,err){
@@ -105,12 +105,12 @@ $(".week-btn").click( function() {
 	$(".month-btn").removeClass("week-month-selected");
 });
 
-$("#backArrow").on("click",function(){
-	var redirectUrl = "/dashboard/" + $(this).attr("data-value");
-	window.location.href = window.location.origin + redirectUrl;
-});
-
-$("#forwardArrow").on("click",function(){
-	var redirectUrl = "/dashboard/" + $(this).attr("data-value");
+$(".arrowBtn").on("click",function(){
+	if($(this).attr("data-type") === "week"){
+		var redirectUrl = "/dashboard/" + $(this).attr("data-value");
+	} else if($(this).attr("data-type") === "day"){
+		var redirectUrl = "/day/" + $(this).attr("data-value");
+	}
+	
 	window.location.href = window.location.origin + redirectUrl;
 });

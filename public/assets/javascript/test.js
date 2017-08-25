@@ -1,8 +1,6 @@
 var myDay = "2017-08-20";
 var checkStart = moment(myDay,"YYYY-MM-DD").hour(6);
 var checkEnd = moment(checkStart).add(1,"hour");
-// console.log(checkStart.format("HH:mm A"));
-// console.log(checkEnd.format("HH:mm A"));
 
 var myShift = {
 	start_time: "10:00:00",
@@ -17,21 +15,25 @@ var myShift = {
 var shiftDate = myShift.date.substring(0,11);
 var shiftStart = moment(shiftDate + myShift.start_time)
 var shiftEnd = moment(shiftDate + myShift.end_time)
+//basically, if the end time is between the start of the day and the start time, it needs to be moved to tomorrow.
+if(shiftEnd.isBetween( moment(shiftStart).startOf("day"),moment(shiftStart) ,null,"[)")){
+	shiftEnd.add(1,"day");
+}
 
-var myHours = [];
+var shiftHours = [];
 var hours = [];
 
 for(var i = 0; i < 24 ; i++){
 	checkStart = moment(myDay, "YYYY-MM-DD").hour(6+i);
 	checkEnd = moment(checkStart).add(1,"hour");
 	if( shiftStart.isBetween(checkStart,checkEnd,null,"[)") ){
-		myHours[i] = "start";
+		shiftHours[i] = "start";
 	}else if( checkStart.isBetween(shiftStart,shiftEnd,null, "[)") ){
-		myHours[i] = "middle";
+		shiftHours[i] = "middle";
 	}else if( shiftEnd.isBetween(checkStart,checkEnd,null,"[)") ){
-		myHours[i] = "end";
+		shiftHours[i] = "end";
 	}else{
-		myHours[i] = "none";
+		shiftHours[i] = "none";
 	}
 	hours.push(checkStart.format("HH:mm"));
 }
