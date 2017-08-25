@@ -34,11 +34,7 @@ app.set("view engine", "handlebars");
 
 
 //Routes
-var routes = require("./controllers/routes.js");
-app.use("/",routes);
-
-var authRoutes = require('./controllers/auth.js');
-app.use("/auth",authRoutes)
+var routes = require("./controllers/routes.js")(app, passport);
 
 
 //Sync Database

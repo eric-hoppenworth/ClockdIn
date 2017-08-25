@@ -3,13 +3,18 @@
         <div class="card off-white-bg">
             <div class="profile-pic"></div>
             <div class="card-content">
-                <span class="card-title name">John Smith</span>
+                <span class="card-title name">{{ data.name }}</span>
+                <img src="{{data.imageURL}}" alt="" class="circle responsive-img center-align" style="height: 100px; width: 100px">
+                 {{#if data.isManager}}
                 <div class="manager-badge">Manager</div>
+                {{/if}}
             </div>
+            {{#if data.isManager}}
             <div class="card-action">
 				<button class = "btn modal-trigger" data-target = "addShift" id = "btnAddShift">Add Shift</button>
                 <button class = "btn modal-trigger" data-target = "addEmployee" id = "btnAddEmployee">Add Employee</button>
             </div>
+            {{/if}}
         </div>
     </div>
 </div>

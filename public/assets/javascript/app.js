@@ -64,8 +64,9 @@ $("#signupSubmit").on("click",function(){
 	myUser.email = $("#signupEmail").val().trim();
 	myUser.password = $("#signupPassword").val();
 	myUser.EmployeeId = $("#signupId").val();
+	myUser.ImageURL = $("#signupImageURL").val();
 
-	$.post("/auth/signUp",myUser,function(data,err){
+	$.post("/auth/signup",myUser,function(data,err){
 
 		//be sure that you sign in the newly created user
 		if(data){
