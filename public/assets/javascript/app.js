@@ -101,5 +101,12 @@ $(".week-btn").click( function() {
 	$(".month-btn").removeClass("week-month-selected");
 });
 
+$("#backArrow").on("click",function(){
+	var redirectUrl = "/dashboard/" + $(this).attr("data-value");
+	window.location.href = window.location.origin + redirectUrl;
+});
 
-
+$("#forwardArrow").on("click",function(){
+	var redirectUrl = "/dashboard/" + $(this).attr("data-value");
+	window.location.href = window.location.origin + redirectUrl;
+});
