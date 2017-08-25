@@ -50,9 +50,11 @@ $("#loginSubmit").on("click",function(){
 	myUser.password = $("#loginPassword").val();
 
 	$.post("/auth/login",myUser,function(data,err){
-		//do something after a success, like redirect
-		if(!err){
-			res.redirect("/dashboard");
+		//be sure that you sign in the newly created user
+		if(data){
+			window.location.href = window.location.origin + '/dashboard';
+		}else{
+			console.log("signin failed");
 		}
 	});
 });
@@ -66,8 +68,10 @@ $("#signupSubmit").on("click",function(){
 	$.post("/auth/signUp",myUser,function(data,err){
 
 		//be sure that you sign in the newly created user
-		if(!err){
-			res.redirect("/dashboard");
+		if(data){
+			window.location.href = window.location.origin + '/dashboard';
+		}else{
+			console.log("signup failed");
 		}
 	});
 });

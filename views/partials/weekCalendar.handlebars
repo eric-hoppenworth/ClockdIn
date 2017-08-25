@@ -1,0 +1,33 @@
+<div id="week-calendar">
+	<table>
+        <thead>
+            <tr>
+                <th class="table-name">Name</th>
+                {{#each data.formatedDates}}
+				<th class = "table-day">
+					{{this}}
+				</th>
+				{{/each}}
+            </tr>
+        </thead>
+		<tbody>
+			{{#each data.rows}}
+            <tr>
+                <td>{{name}}</td>
+                {{#days}}
+                    {{#if this}}
+						<td class = "days-with-schedule">
+							{{#each this}}
+								{{> shifts}}
+							{{/each}}
+						</td>
+					{{else}}
+					<td></td>
+					{{/if}}
+                {{/days}}
+
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
