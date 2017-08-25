@@ -51,6 +51,9 @@ $("#loginSubmit").on("click",function(){
 
 	$.post("/auth/login",myUser,function(data,err){
 		//do something after a success, like redirect
+		if(!err){
+			res.redirect("/dashboard");
+		}
 	});
 });
 
@@ -61,7 +64,11 @@ $("#signupSubmit").on("click",function(){
 	myUser.EmployeeId = $("#signupId").val();
 
 	$.post("/auth/signUp",myUser,function(data,err){
-		//do something after a success, like redirect
+
+		//be sure that you sign in the newly created user
+		if(!err){
+			res.redirect("/dashboard");
+		}
 	});
 });
 

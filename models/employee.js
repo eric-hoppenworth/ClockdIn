@@ -18,6 +18,9 @@ module.exports = function (sequelize, DataTypes) {
 		Employee.hasMany(models.Shift, {
 			onDelete: "cascade"
 		});
+		Employee.belongsTo(models.User, {
+
+		});
 	};
 
 	return Employee;

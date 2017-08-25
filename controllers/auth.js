@@ -10,16 +10,16 @@ router.post('/signup', passport.authenticate('local-signup', {
 		failureRedirect: '/'
 	}), 
 	function(req, res) {
-    	res.redirect('/');
+    	
 	}
 );
 
-router.post('/signin', passport.authenticate('local-signin', {
+router.post('/login', passport.authenticate('local-signin', {
 		successRedirect: '/dashboard',
 		failureRedirect: '/'
 	}), 
 	function(req, res) {
-    	res.redirect('/');
+    	
 	}
 );
 
