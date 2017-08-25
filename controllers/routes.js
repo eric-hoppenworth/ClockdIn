@@ -8,14 +8,24 @@ const Employee = db.Employee;
 
 //HTML routing for home page
 router.route("/").get(function(req,res){
-	res.sendFile(path.resolve("public/test.html"));
-	//res.render("splash");
+	//res.sendFile(path.resolve("public/test.html"));
+	res.render("splash");
+});
+
+router.route("/day/:dayStart?").get(function(req,res){
+	//TESTING
+	var dayStart;
+	var dayEnd;
+	if(!req.params.dayStart){
+		dayStart = moment().hour(6);
+		dayEnd = moment(dayStart).add(23,"hour");
+	} else {
+		dayStart = moment(req.params.dayStart).hour(6);
+		dayEnd = "dasd";
+	}
 });
 
 router.route("/dashboard/:weekStart?").get(function(req,res){
-	//This is in testing phase.
-	//this is the object that is retrieved from the database.
-	//for testing, I have used a hard coded object.
 	var weekStart;
 	var weekEnd;
 
@@ -80,6 +90,7 @@ router.route("/dashboard/:weekStart?").get(function(req,res){
 		//attach week dates
 		templateData.formatedDates = formatedDates;
 		templateData.head = {};
+		templateData.head.type = "week";
 		templateData.head.back = weekStart.add(-1,"day").format();
 		templateData.head.forward = weekEnd.add(1,"day").format();
 		templateData.head.middle = weekStart.format("MMMM") + " " + weekStart.add(1,'day').format("DD") + " - " + weekEnd.add(-1,'day').format("DD");

@@ -6,8 +6,8 @@ var passport = require("passport");
 const User = db.User;
 
 router.post('/signup', passport.authenticate('local-signup', {
-		successRedirect: '/dashboard',
-		failureRedirect: '/'
+		successRedirect: '/auth/success',
+		failureRedirect: '/auth/failure'
 	}), 
 	function(req, res) {
     	
@@ -15,13 +15,20 @@ router.post('/signup', passport.authenticate('local-signup', {
 );
 
 router.post('/login', passport.authenticate('local-signin', {
-		successRedirect: '/dashboard',
-		failureRedirect: '/'
+		successRedirect: '/auth/success',
+		failureRedirect: '/auth/failure'
 	}), 
 	function(req, res) {
     	
 	}
 );
 
+router.get("/success",function(req,res){
+	res.json(true);
+});
+
+router.get("/failure",function(req,res){
+	res.json(false);
+});
 
 module.exports = router;
