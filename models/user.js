@@ -2,37 +2,48 @@ module.exports = function(sequelize, Sequelize) {
 	
 	   var User = sequelize.define('User', {
 	
-		   id: {
+			id: {
 			   autoIncrement: true,
 			   primaryKey: true,
 			   type: Sequelize.INTEGER
-		   },
-	
-		   firstname: {
+			},
+
+			firstname: {
 			   type: Sequelize.STRING,
 			   notEmpty: true
-		   },
-	
-		   lastname: {
+			},
+
+			lastname: {
 			   type: Sequelize.STRING,
 			   notEmpty: true
-		   },
-	
-		   username: {
+			},
+
+			username: {
 			   type: Sequelize.TEXT
-		   },
-		   email: {
+			},
+			email: {
 			   type: Sequelize.STRING,
 			   validate: {
 				   isEmail: true
 			   }
-		   },
-		   password: {
+			},
+			password: {
 			   type: Sequelize.STRING,
 			   allowNull: false
-		   }
-	
+			},
+			EmployeeId:{
+				type: Sequelize.INTEGER,
+				allowNull: false
+			}
 	   });
+	   User.associate = function(models) {
+		    // We're saying that a Shift should belong to an Employee
+		    User.hasOne(models.Employee, {
+			  foreignKey: {
+					allowNull: false
+				}
+			});
+		};
 	
 	   return User;
 	

@@ -80,9 +80,10 @@ router.route("/dashboard/:weekStart?").get(function(req,res){
 		}
 		//attach week dates
 		templateData.formatedDates = formatedDates;
-		templateData.button = {};
-		templateData.button.back = weekStart.add(-1,"day").format();
-		templateData.button.forward = weekEnd.add(1,"day").format();
+		templateData.head = {};
+		templateData.head.back = weekStart.add(-1,"day").format();
+		templateData.head.forward = weekEnd.add(1,"day").format();
+		templateData.head.middle = weekStart.format("MMMM") + " " + weekStart.add(1,'day').format("DD") + " - " + weekEnd.add(-1,'day').format("DD");
 		//perform second query to get all employees
 		Employee.findAll({
 			attributes: ["id","name","is_manager"]

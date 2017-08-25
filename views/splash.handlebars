@@ -1,29 +1,62 @@
 <div id="splash-bg">
     <div id="splash-container">
         <h1>Welcome To Clockd In</h1>
-        <button data-target="modal1" class="waves-effect waves-light btn modal-trigger">Login</button>
+        <button data-target="modalLogin" class="waves-effect waves-light btn modal-trigger">Login</button>
+        <button data-target="modalSignup" class="waves-effect waves-light btn modal-trigger">Sign Up</button>
+
+
+
+
 
         <!-- Modal Structure -->
-        <div id="modal1" class="modal modal-fixed-footer login-modal">
+        <div id="modalLogin" class="modal modal-fixed-footer login-modal">
             <div class="modal-content">
                 <h4>Login</h4>
-                <p>Inputs will go here</p>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="email" type="email" class="validate">
-                        <label for="email">Email</label>
+                        <input id="loginEmail" type="email" class="validate">
+                        <label for="loginEmail">Email</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="password" type="password" class="validate">
-                        <label for="password">Password</label>
+                        <input id="loginPassword" type="password" class="validate">
+                        <label for="loginPassword">Password</label>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
-                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Login</a>
+                <a id="loginSubmit" class="modal-action modal-close waves-effect waves-green btn-flat ">Login</a>
+            </div>
+        </div>
+
+        <!-- Modal Structure -->
+        <div id="modalSignup" class="modal modal-fixed-footer login-modal">
+            <div class="modal-content">
+                <h4>Sign Up</h4>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="signupEmail" type="email" class="validate">
+                        <label for="signupEmail">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="signupPassword" type="password" class="validate">
+                        <label for="signupPassword">Password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="signupId" type="number" class="validate">
+                        <label for="signupId">Employee Id</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
+                <a id= "signupSubmit" class="modal-action modal-close waves-effect waves-green btn-flat ">Sign Up</a>
             </div>
         </div>
 

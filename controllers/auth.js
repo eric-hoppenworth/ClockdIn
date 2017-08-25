@@ -6,20 +6,20 @@ var passport = require("passport");
 const User = db.User;
 
 router.post('/signup', passport.authenticate('local-signup', {
-		successRedirect: '/',
-		failureRedirect: '/auth/signup'
+		successRedirect: '/dashboard',
+		failureRedirect: '/'
 	}), 
 	function(req, res) {
-    	res.redirect('/');
+    	
 	}
 );
 
-router.post('/signin', passport.authenticate('local-signin', {
-		successRedirect: '/',
-		failureRedirect: '/auth/signin'
+router.post('/login', passport.authenticate('local-signin', {
+		successRedirect: '/dashboard',
+		failureRedirect: '/'
 	}), 
 	function(req, res) {
-    	res.redirect('/');
+    	
 	}
 );
 

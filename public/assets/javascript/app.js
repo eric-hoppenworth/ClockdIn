@@ -2,12 +2,14 @@ console.log("connected");
 
 
 $(document).ready(function() {
-    $('#modal1').modal();
+    $('#modalLogin').modal();
+    $('#modalSignup').modal();
     $("#addShift").modal();
     $("#addEmployee").modal();
     $("#alert").modal();
-    $('#modal2').modal();
     $("select").material_select();
+
+    $('#modal2').modal();
 });
 
 
@@ -42,6 +44,34 @@ $("#shiftSubmit").on("click",function(){
 	});
 });
 
+$("#loginSubmit").on("click",function(){
+	var myUser = {};
+	myUser.email = $("#loginEmail").val().trim();
+	myUser.password = $("#loginPassword").val();
+
+	$.post("/auth/login",myUser,function(data,err){
+		//do something after a success, like redirect
+		if(!err){
+			res.redirect("/dashboard");
+		}
+	});
+});
+
+$("#signupSubmit").on("click",function(){
+	var myUser = {};
+	myUser.email = $("#signupEmail").val().trim();
+	myUser.password = $("#signupPassword").val();
+	myUser.EmployeeId = $("#signupId").val();
+
+	$.post("/auth/signUp",myUser,function(data,err){
+
+		//be sure that you sign in the newly created user
+		if(!err){
+			res.redirect("/dashboard");
+		}
+	});
+});
+
 
 $("#alertClear").on("click",function(){
 	$("#alert .modal-content").empty();
@@ -62,14 +92,14 @@ $(document).ready(function(){
 });
 
 $(".month-btn").click( function() {
-    $(this).addClass("week-month-selected");
-    $(".week-btn").removeClass("week-month-selected");
-  });
+	$(this).addClass("week-month-selected");
+	$(".week-btn").removeClass("week-month-selected");
+});
 
 $(".week-btn").click( function() {
-    $(this).addClass("week-month-selected");
-    $(".month-btn").removeClass("week-month-selected");
-  });
+	$(this).addClass("week-month-selected");
+	$(".month-btn").removeClass("week-month-selected");
+});
 
 
 

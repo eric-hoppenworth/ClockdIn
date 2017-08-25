@@ -3,9 +3,7 @@
         <div class="nav-wrapper">
             <a href="#" class="brand-logo">Logo</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="sass.html">Sass</a></li>
-                <li><a href="badges.html">Components</a></li>
-                <li><a href="collapsible.html">JavaScript</a></li>
+                <li><a href="#modelLogout">Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -42,12 +40,12 @@
                         </div>
                     </div>
                     <div class="row month-row">
-                        <div data-value="{{data.button.back}}" class="col s4 arrows left-arrow">
-                        	<i class="sm-md material-icons float-right">chevron_left</i>
+                        <div class="col s4 arrows left-arrow">
+                        	<i id="backArrow" data-value="{{data.head.back}}" class="sm-md material-icons float-right">chevron_left</i>
                         </div>
-                        <div class="col s4 month-display">September 23-30</div>
-                        <div data-value="{{data.button.forward}}" class="col s4 arrows right-arrow">
-                        	<i class="sm-md material-icons float-left">chevron_right</i>
+                        <div class="col s4 month-display">{{data.head.middle}}</div>
+                        <div class="col s4 arrows right-arrow">
+                        	<i id="forwardArrow" data-value="{{data.head.forward}}" class="sm-md material-icons float-left">chevron_right</i>
                         </div>
                     </div>
                     <div id="calendar-container">
