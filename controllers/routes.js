@@ -204,10 +204,20 @@ module.exports = function (router, passport) {
 			templateData.head.forward = weekEnd.add(1, "day").format();
 			templateData.head.middle = weekStart.format("MMMM") + " " + weekStart.add(1, 'day').format("DD") + " - " + weekEnd.add(-1, 'day').format("DD");
 			//perform second query to get all employees
+			templateData.userInfo = {};
 			Employee.findAll({
 				attributes: ["id", "name", "is_manager"]
 			}).then(function (empData) {
 				templateData.employees = empData;
+				templateData.userInfo.imageURL = req.user.imageURL;
+				Employee.findOne({
+					where: {
+						id: req.user.EmployeeId
+					}
+				}).then(function(res) {
+					templateData.userInfo.isManager = res.is_manager;
+					templateData.userInfo.name = res.name;
+				})
 				//send to Template for rendering.
 				//currently it just sends to the browser
 				//res.json(templateData);
@@ -215,10 +225,8 @@ module.exports = function (router, passport) {
 					data: templateData
 				});
 			});
-
 		});
 	});
-
 
 	/////////////////////////////////
 	// ADD OR UPDATE SHIFTS /////////
