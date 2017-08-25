@@ -12,6 +12,11 @@ $(document).ready(function() {
     $('#modal2').modal();
 });
 
+$("#logout").on("click", function() {
+	$.get("/auth/logout", function(data, err) {
+		window.location.href = window.location.origin;
+	})
+})
 
 $("#empSubmit").on("click",function(){
 	var myEmployee =  {};
