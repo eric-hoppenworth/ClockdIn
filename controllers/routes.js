@@ -8,7 +8,6 @@ const Shift = db.Shift;
 const Employee = db.Employee;
 module.exports = function (router, passport) {
 
-
 	//HTML routing for home page
 	router.route("/").get(function (req, res) {
 		//res.sendFile(path.resolve("public/test.html"));
@@ -20,11 +19,10 @@ module.exports = function (router, passport) {
 			failureRedirect: '/auth/failure'
 		}),
 		function (req, res) {
-
+    
 		}
 	);
-
-	router.post('/auth/login', passport.authenticate('local-signin', {
+  router.post('/auth/login', passport.authenticate('local-signin', {
 			successRedirect: '/auth/success',
 			failureRedirect: '/auth/failure'
 		}),
@@ -41,24 +39,104 @@ module.exports = function (router, passport) {
 		res.json(false);
 	});
 
-	router.route("/day/:dayStart?").get(function (req, res) {
-		//TESTING
-		var dayStart;
-		var dayEnd;
-		if (!req.params.dayStart) {
-			dayStart = moment().hour(6);
-			dayEnd = moment(dayStart).add(23, "hour");
-		} else {
-			dayStart = moment(req.params.dayStart).hour(6);
-			dayEnd = "dasd";
+router.route("/day/:dayStart?").get(function(req,res){
+	//TESTING
+	var dayStart;
+	var dayEnd;
+	if(!req.params.dayStart){
+		dayStart = moment().hour(6);
+		dayEnd = moment(dayStart).add(23,"hour");
+	} else {
+		dayStart = moment(req.params.dayStart).hour(6);
+		dayEnd = moment(dayStart).add(23,"hour");
+	}
+	console.log("//////////////////");
+	console.log(dayStart.format());
+	console.log(dayEnd.format());
+	console.log("//////////////////");
+	Employee.findAll({
+		attributes: ["name","is_manager"],
+		include: [{
+			model: Shift,
+			where: {
+				date: {
+					$gt: dayStart,
+					$lt: dayEnd
+				}
+			}
+		}]
+	}).then(function(dbData){
+		// testing
+		var myDay = req.params.dayStart;
+		var checkStart = moment(myDay).hour(6);
+		var checkEnd = moment(checkStart).add(1,"hour");
+
+		var templateData = {
+			rows: []
+		};
+
+		templateData.dayHours = [];
+		for(var i = 0; i < 24 ; i++){
+			templateData.dayHours.push(moment(myDay).hour(6+i).format("h:mm A"));
 		}
+
+		for(var i = 0; i < dbData.length; i++){
+			var myEmployee = dbData[i];
+			var myRow = {};
+			myRow.name = myEmployee.name;
+			myRow.hours = [];
+			for (var j = 0; j < myEmployee.Shifts.length ; j++){
+				var myShift = myEmployee.Shifts[j];
+				var shiftDate = moment(myShift.date).format("YYYY-MM-DD");
+				var shiftStart = moment(shiftDate + " " + myShift.start_time)
+				var shiftEnd = moment(shiftDate + " " + myShift.end_time)
+				//basically, if the end time is between the start of the day and the start time, it needs to be moved to tomorrow.
+				if(shiftEnd.isBetween( moment(shiftStart).startOf("day"),moment(shiftStart) ,null,"[)")){
+					shiftEnd.add(1,"day");
+				}
+				//if this shift happens to be on this day...
+				var shiftHours = [];
+
+				for(var i = 0; i < 24 ; i++){
+					checkStart = moment(myDay).hour(6+i);
+					checkEnd = moment(checkStart).add(1,"hour");
+					if( shiftStart.isBetween(checkStart,checkEnd,null,"[)") ){
+						shiftHours[i] = moment(myShift.start_time,"HH:mm:ss").format("h:mm A");
+					}else if( checkStart.isBetween(shiftStart,shiftEnd,null, "[)") ){
+						shiftHours[i] = "middle";
+					}else if( shiftEnd.isBetween(checkStart,checkEnd,null,"[)") ){
+						shiftHours[i] = moment(myShift.end_time,"HH:mm:ss").format("h:mm A");
+					}else{
+						shiftHours[i] = null;
+					}
+				}
+				myRow.hours[j] = shiftHours;
+			}
+			templateData.rows.push(myRow);
+		}
+		//Now that each employee is set, add in the meta-data
+		templateData.head = {};
+		templateData.head.type = "day";
+		templateData.head.back = moment(myDay).startOf('day').add(-1,"day").format();
+		templateData.head.forward = moment(myDay).startOf('day').add(1,"day").format();
+		templateData.head.middle = moment(myDay).format("MMMM DD dddd");
+		//perform second query to get all employees
+		Employee.findAll({
+			attributes: ["id","name","is_manager"]
+		}).then(function(empData){
+			templateData.employees = empData;
+			//send to Template for rendering.
+			//currently it just sends to the browser
+			// res.json(templateData);
+			res.render("dashboard",{data: templateData});
+		});
 	});
+
 	// passport.authenticate("local-signin")
 	router.get("/dashboard/:weekStart?", isLoggedIn, function (req, res) {
 		console.log(req.user);
 		var weekStart;
 		var weekEnd;
-
 		if (!req.params.weekStart) {
 			weekStart = moment().startOf('week');
 			weekEnd = moment().endOf('week');
@@ -125,20 +203,10 @@ module.exports = function (router, passport) {
 			templateData.head.forward = weekEnd.add(1, "day").format();
 			templateData.head.middle = weekStart.format("MMMM") + " " + weekStart.add(1, 'day').format("DD") + " - " + weekEnd.add(-1, 'day').format("DD");
 			//perform second query to get all employees
-			templateData.userInfo = {};
 			Employee.findAll({
 				attributes: ["id", "name", "is_manager"]
 			}).then(function (empData) {
 				templateData.employees = empData;
-				templateData.userInfo.imageURL = req.user.imageURL;
-				Employee.findOne({
-					where: {
-						id: req.user.EmployeeId
-					}
-				}).then(function(res) {
-					templateData.userInfo.isManager = res.is_manager;
-					templateData.userInfo.name = res.name;
-				})
 				//send to Template for rendering.
 				//currently it just sends to the browser
 				//res.json(templateData);
@@ -163,7 +231,6 @@ module.exports = function (router, passport) {
 
 	router.route("/shifts/update").post(function () {
 		var myShift = req.body;
-
 		Shift.update(myShift, {
 			where: {
 				id: myShift.id
@@ -178,7 +245,6 @@ module.exports = function (router, passport) {
 	router.route("/employees/add").post(function (req, res) {
 		//no code yet
 		var newEmployee = req.body;
-
 		Employee.create(newEmployee)
 			.then(data => res.json(data))
 	});
