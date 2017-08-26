@@ -79,7 +79,7 @@ wrapper {
     display: inherit;
     text-align: center;
     width: 60px;
-    margin: -15px auto;
+    margin: 5px auto;
 }
 
 .sign-up:hover {
@@ -279,6 +279,11 @@ table {
 
 .table-day {
     width: 10%;
+}
+
+.table-hr {
+    width: 3%;
+    border: 1px solid #777;
 }
 
 tr {
