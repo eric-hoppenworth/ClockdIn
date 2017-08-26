@@ -57,10 +57,6 @@ module.exports = function (router, passport) {
 			dayStart = moment(req.params.dayStart).hour(6);
 			dayEnd = moment(dayStart).add(23, "hour");
 		}
-		console.log("//////////////////");
-		console.log(dayStart.format());
-		console.log(dayEnd.format());
-		console.log("//////////////////");
 		Employee.findAll({
 			attributes: ["name", "is_manager"],
 			include: [{
@@ -127,13 +123,24 @@ module.exports = function (router, passport) {
 			templateData.head.forward = moment(myDay).startOf('day').add(1, "day").format();
 			templateData.head.middle = moment(myDay).format("MMMM DD dddd");
 			//perform second query to get all employees
+			templateData.userInfo = {};
 			Employee.findAll({
 				attributes: ["id", "name", "is_manager"]
 			}).then(function (empData) {
 				templateData.employees = empData;
+				templateData.userInfo.imageURL = req.user.imageURL;
+				Employee.findOne({
+					where: {
+						id: req.user.EmployeeId
+					}
+				}).then(function (res) {
+					templateData.userInfo.isManager = res.is_manager;
+					templateData.userInfo.name = res.name;
+				})
 				//send to Template for rendering.
 				//currently it just sends to the browser
-				// res.json(templateData);
+				//res.json(templateData);
+				console.log(templateData);
 				res.render("dashboard", {
 					data: templateData
 				});
