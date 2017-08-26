@@ -136,13 +136,13 @@ module.exports = function (router, passport) {
 				}).then(function (res) {
 					templateData.userInfo.isManager = res.is_manager;
 					templateData.userInfo.name = res.name;
-				})
-				//send to Template for rendering.
-				//currently it just sends to the browser
-				//res.json(templateData);
-				console.log(templateData);
-				res.render("dashboard", {
-					data: templateData
+					//send to Template for rendering.
+					//currently it just sends to the browser
+					//res.json(templateData);
+					console.log(templateData);
+					res.render("dashboard", {
+						data: templateData
+					});
 				});
 			});
 		});
@@ -232,13 +232,13 @@ module.exports = function (router, passport) {
 				}).then(function (res) {
 					templateData.userInfo.isManager = res.is_manager;
 					templateData.userInfo.name = res.name;
+					//send to Template for rendering.
+					//currently it just sends to the browser
+					//res.json(templateData);
+					res.render("dashboard", {
+						data: templateData
+					});
 				})
-				//send to Template for rendering.
-				//currently it just sends to the browser
-				//res.json(templateData);
-				res.render("dashboard", {
-					data: templateData
-				});
 			});
 		});
 	});
