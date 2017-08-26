@@ -133,9 +133,9 @@ module.exports = function (router, passport) {
 					where: {
 						id: req.user.EmployeeId
 					}
-				}).then(function (res) {
-					templateData.userInfo.isManager = res.is_manager;
-					templateData.userInfo.name = res.name;
+				}).then(function (infoData) {
+					templateData.userInfo.isManager = infoData.is_manager;
+					templateData.userInfo.name = infoData.name;
 					//send to Template for rendering.
 					//currently it just sends to the browser
 					//res.json(templateData);
@@ -229,9 +229,9 @@ module.exports = function (router, passport) {
 					where: {
 						id: req.user.EmployeeId
 					}
-				}).then(function (res) {
-					templateData.userInfo.isManager = res.is_manager;
-					templateData.userInfo.name = res.name;
+				}).then(function (infoData) {
+					templateData.userInfo.isManager = infoData.is_manager;
+					templateData.userInfo.name = infoData.name;
 					//send to Template for rendering.
 					//currently it just sends to the browser
 					//res.json(templateData);
