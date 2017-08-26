@@ -38,7 +38,7 @@ var routes = require("./controllers/routes.js")(app, passport);
 
 
 //Sync Database
-models.sequelize.sync().then(function(){
+models.sequelize.sync({force:true}).then(function(){
 	app.listen(port, function(err){
 	    if(!err){
 	    	console.log("Site is live on " + port);
