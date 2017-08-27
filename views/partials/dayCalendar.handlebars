@@ -14,17 +14,18 @@
 			{{#each data.rows}}
             <tr>
                 <td>{{name}}</td>
-                {{#hours}}
+                {{#each hours}}
                     {{#if this}}
-                    	{{#each this}}
-						<td class = "days-with-schedule">
-							{{this}}
-						</td>
-						{{/each}}
-					{{else}}
-					<td></td>
-					{{/if}}
-                {{/hours}}
+					<td class = "days-with-schedule">
+						{{#compare this "===" "middle"}}
+                        {{else}}
+                            {{this}}
+                        {{/compare}}
+					</td>
+                    {{else}}
+                    <td></td>
+                    {{/if}}
+                {{/each}}
 
             </tr>
             {{/each}}

@@ -79,7 +79,7 @@ module.exports = function (router, passport) {
 
 			templateData.dayHours = [];
 			for (var i = 0; i < 24; i++) {
-				templateData.dayHours.push(moment(myDay).hour(6 + i).format("h:mm A"));
+				templateData.dayHours.push(moment(myDay).hour(6 + i).format("h a"));
 			}
 
 			for (var i = 0; i < dbData.length; i++) {
@@ -97,23 +97,21 @@ module.exports = function (router, passport) {
 						shiftEnd.add(1, "day");
 					}
 					//if this shift happens to be on this day...
-					var shiftHours = [];
-
 					for (var i = 0; i < 24; i++) {
 						checkStart = moment(myDay).hour(6 + i);
 						checkEnd = moment(checkStart).add(1, "hour");
 						if (shiftStart.isBetween(checkStart, checkEnd, null, "[)")) {
-							shiftHours[i] = moment(myShift.start_time, "HH:mm:ss").format("h:mm A");
+							myRow.hours[i] = moment(myShift.start_time, "HH:mm:ss").format("h:mm a");
 						} else if (checkStart.isBetween(shiftStart, shiftEnd, null, "[)")) {
-							shiftHours[i] = "middle";
+							myRow.hours[i] = "middle";
 						} else if (shiftEnd.isBetween(checkStart, checkEnd, null, "[)")) {
-							shiftHours[i] = moment(myShift.end_time, "HH:mm:ss").format("h:mm A");
-						} else {
-							shiftHours[i] = null;
+							myRow.hours[i] = moment(myShift.end_time, "HH:mm:ss").format("h:mm a");
+						} else if(!myRow.hours[i]){
+							myRow.hours[i] = null;
 						}
 					}
-					myRow.hours[j] = shiftHours;
 				}
+				console.log(myRow.hours);
 				templateData.rows.push(myRow);
 			}
 			//Now that each employee is set, add in the meta-data
@@ -149,6 +147,7 @@ module.exports = function (router, passport) {
 	});
 
 	// passport.authenticate("local-signin")
+	// router.get("/dashboard/:weekStart?", function (req, res) {
 	router.get("/dashboard/:weekStart?", isLoggedIn, function (req, res) {
 		console.log(req.user);
 		var weekStart;
@@ -182,7 +181,7 @@ module.exports = function (router, passport) {
 			//properly formated dates for display on page
 			var formatedDates = [];
 			for (var i = 0; i < 7; i++) {
-				formatedDates.push(moment(weekStart).add(i, "day").format("MMM D ddd"));
+				formatedDates.push(moment(weekStart).add(i, "day").format("D ddd"));
 			}
 			//build Objects for entering into the template.
 			var templateData = {
@@ -247,10 +246,54 @@ module.exports = function (router, passport) {
 	// ADD OR UPDATE SHIFTS /////////
 	/////////////////////////////////
 	router.route("/shifts/add").post(function (req, res) {
+		var isValid = true;
+
 		var newShift = req.body;
-		console.log(newShift);
-		Shift.create(newShift)
-			.then(data => res.json(data));
+		var shiftDate = moment(newShift.date).format("YYYY-MM-DD");
+		var shiftStart = moment(shiftDate + " " + newShift.start_time)
+		var shiftEnd = moment(shiftDate + " " + newShift.end_time)
+		//basically, if the end time is between the start of the day and the start time, it needs to be moved to tomorrow.
+		if (shiftEnd.isBetween(moment(shiftStart).startOf("day"), moment(shiftStart), null, "[)")) {
+			shiftEnd.add(1, "day");
+		}
+		// We need to check to see if this new shift overlaps with any current shifts
+		Shift.findAll({
+			where: {
+				EmployeeId: newShift.EmployeeId,
+				date: newShift.date
+			}
+		}).then(function(shiftData){
+			//This grabs the shifts for the same day as the one that is trying to be added
+			for (var i = 0; i < shiftData.length; i ++){
+				var myShift = shiftData[i];
+				var shiftDate = moment(myShift.date).format("YYYY-MM-DD");
+				var checkStart = moment(shiftDate + " " + myShift.start_time)
+				var checkEnd = moment(shiftDate + " " + myShift.end_time)
+				//basically, if the end time is between the start of the day and the start time, it needs to be moved to tomorrow.
+				if (checkEnd.isBetween(moment(checkStart).startOf("day"), moment(checkStart), null, "[)")) {
+					checkEnd.add(1, "day");
+				}
+
+				//if the start(or end) of the new shift is between any one of the checkShifts...
+				if(shiftStart.isBetween(checkStart,checkEnd,null,"()") || shiftEnd.isBetween(checkStart,checkEnd,null,"()") ){
+					isValid = false;
+				} else if(checkStart.isBetween(shiftStart,shiftEnd,null,"()")){
+					//My new shift completely overlaps an existing one
+					isValid = false;
+				}
+			}
+			if(isValid){
+				Shift.create(newShift).then(function(data){
+					res.json({isValid: true, data:data});
+				});
+			} else {
+				res.json({isValid: false, data: null})
+			}
+
+
+		});
+
+		
 	});
 
 	router.route("/shifts/update").post(function () {
