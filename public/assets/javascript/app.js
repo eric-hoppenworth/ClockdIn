@@ -45,7 +45,12 @@ $("#shiftSubmit").on("click",function(){
 	myShift.position = $("#shiftPosition").val();
 	myShift.EmployeeId = $("#shiftName").val();
 	$.post("/shifts/add",myShift,function(data,err){
-		console.log("done");
+		if(data.isValid){
+			//reload page
+			window.location.reload(true);
+		} else {
+			alert("This shift overlaps with an already scheduled shift");
+		}
 	});
 });
 
