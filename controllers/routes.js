@@ -253,10 +253,10 @@ module.exports = function (router, passport) {
 
 		var newShift = req.body;
 		var shiftDate = moment(newShift.date).format("YYYY-MM-DD");
-		var shiftStart = moment(shiftDate + " " + newShift.start_time)
-		var shiftEnd = moment(shiftDate + " " + newShift.end_time)
+		var shiftStart = moment(shiftDate + " " + newShift.start_time);
+		var shiftEnd = moment(shiftDate + " " + newShift.end_time);
 		//basically, if the end time is between the start of the day and the start time, it needs to be moved to tomorrow.
-		if (shiftEnd.isBetween(moment(shiftStart).startOf("day"), moment(shiftStart), null, "[)")) {
+		if (shiftEnd.isBetween(moment(shiftStart).startOf("day"), shiftStart, null, "[)")) {
 			shiftEnd.add(1, "day");
 		}
 		// We need to check to see if this new shift overlaps with any current shifts
@@ -286,8 +286,15 @@ module.exports = function (router, passport) {
 				}
 			}
 			if(isValid){
-				Shift.create(newShift).then(function(data){
-					res.json({isValid: true, data:data});
+				//check to see if that shift is within the employee's availability
+				checkAvail(newShift).then(function(availResult){
+					if(availResult.isValid){
+						Shift.create(newShift).then(function(data){
+							res.json({isValid: true, data:data});
+						});
+					} else {
+						res.json(availResult);
+					}
 				});
 			} else {
 				res.json({isValid: false, data: null})
@@ -302,6 +309,12 @@ module.exports = function (router, passport) {
 				id: myShift.id
 			}
 		}).then(data => res.json(data));
+	});
+
+	router.route("/shifts/override").post(function (req,res) {
+		var newShift = req.body;
+		Shift.create(newShift)
+			.then(data => res.json(data));
 	});
 
 	///////////////////////////////////
@@ -368,4 +381,96 @@ module.exports = function (router, passport) {
 
 		res.redirect('/');
 	}
+
+	function checkAvail(newShift){
+		var shiftDate = moment(newShift.date).format("YYYY-MM-DD");
+		var shiftStart = moment(shiftDate + " " + newShift.start_time);
+		var shiftEnd = moment(shiftDate + " " + newShift.end_time);
+		var format = "YYYY-MM-DD HH:mm:ss";
+		//basically, if the end time is between the start of the day and the start time, it needs to be moved to tomorrow.
+		if (shiftEnd.isBetween(moment(shiftStart).startOf("day"), shiftStart, null, "[)")) {
+			shiftEnd.add(1, "day");
+		}
+		return new Promise(function(resolve,reject){
+			Availability.findOne({
+				where: {
+					EmployeeId: newShift.EmployeeId
+				}
+			}).then(function(data){
+				var myDay = moment(newShift.date).day();
+				var availStart;
+				var availEnd;
+				switch (myDay){
+					case 0:
+						availStart = moment(shiftDate + " " + data.sunday_start,format);
+						availEnd = moment(shiftDate + "  "+ data.sunday_end,format);
+						break;
+					case 1:
+						availStart = moment(shiftDate + " " + data.monday_start,format);
+						availEnd = moment(shiftDate + "  "+ data.monday_end,format);
+						break;
+					case 2:
+						availStart = moment(shiftDate + " " + data.tuesday_start,format);
+						availEnd = moment(shiftDate + "  "+ data.tuesday_end,format);
+						break;
+					case 3:
+						availStart = moment(shiftDate + " " + data.wednesday_start,format);
+						availEnd = moment(shiftDate + "  "+ data.wednesday_end,format);
+						break;
+					case 4:
+						availStart = moment(shiftDate + " " + data.thursday_start,format);
+						availEnd = moment(shiftDate + "  "+ data.thursday_end,format);
+						break;
+					case 5:
+						availStart = moment(shiftDate + " " + data.friday_start,format);
+						availEnd = moment(shiftDate + "  "+ data.friday_end,format);
+						break;
+					case 6:
+						availStart = moment(shiftDate + " " + data.saturday_start,format);
+						availEnd = moment(shiftDate + "  "+ data.saturday_end,format);
+						break;
+				}
+				if (availEnd.isBetween(moment(availStart).startOf("day"), availStart, null, "[)")) {
+					availEnd.add(1, "day");
+				}
+				//OK now check
+				console.log("///////////////////////////")
+				console.log(myDay);
+				console.log(data.tuesday_start);
+				console.log(data.tuesday_end);
+				console.log(availStart);
+				console.log(availEnd);
+				console.log(shiftStart);
+				console.log(shiftEnd);
+				console.log("///////////////////////////")
+				if(shiftStart.isBetween(availStart,availEnd,null,"[]") && shiftEnd.isBetween(availStart,availEnd,null,"[]") ){
+					console.log("within avail")
+					var result ={
+						isValid: true, 
+						data: {
+							start: availStart.format("hh:mm a"),
+							end: availEnd.format("hh:mm a"),
+							newShift: newShift
+						}
+					};
+					resolve(result);
+				} else {
+					//My new shift completely overlaps availability
+					console.log("outside of Avail")
+					var result = {
+						isValid: false, 
+						data: {
+							start: availStart.format("hh:mm a"),
+							end: availEnd.format("hh:mm a"),
+							newShift: newShift
+						}
+					};
+					resolve(result);
+				}
+			});
+		})
+		
+	}
 };
+
+
