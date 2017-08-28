@@ -177,3 +177,23 @@
         <p id= "submitAvailability" data-value = "{{data.userInfo.id}}" class="modal-action modal-close waves-effect waves-green btn-flat"> Save </p>
     </div>
 </div>
+
+<div id="override" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <p>The shift you are trying to add is outside of the Employee's availabilty:</p>
+        <div class = "col s6">
+            <p>Start:</p>
+            <p id = "availStart"></p>
+        </div>
+        <div class = "col s6">
+            <p>End:</p>
+            <p id = "availEnd"></p>
+        </div>
+        
+        <h2>Would you like to schedule this shift anyway?</h2>
+    </div>
+    <div class="modal-footer">
+        <p class="modal-action modal-close waves-effect waves-green btn-flat"> Close </p>
+        <p id="btnOverride" class="modal-action modal-close waves-effect waves-green btn-flat"> Override </p>
+    </div>
+</div>

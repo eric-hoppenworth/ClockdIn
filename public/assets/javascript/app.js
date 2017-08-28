@@ -1,4 +1,6 @@
-console.log("connected");
+function emptyAlert(){
+	$("#alert .modal-content").empty();
+}
 
 
 $(document).ready(function() {
@@ -6,8 +8,11 @@ $(document).ready(function() {
     $('#modalSignup').modal();
     $("#addShift").modal();
     $("#addEmployee").modal();
-    $("#alert").modal();
+    $("#alert").modal({
+    	complete: emptyAlert
+    });
     $("#setAvailability").modal();
+    $("#override").modal();
     $("select").material_select();
 
     $('#modal2').modal();
@@ -45,12 +50,20 @@ $("#shiftSubmit").on("click",function(){
 	myShift.date = moment($("#shiftDate").val(),"YYYY-MM-DD").hour(12).format();
 	myShift.position = $("#shiftPosition").val();
 	myShift.EmployeeId = $("#shiftName").val();
+	console.log(myShift);
 	$.post("/shifts/add",myShift,function(data,err){
 		if(data.isValid){
 			//reload page
 			window.location.reload(true);
-		} else {
-			alert("This shift overlaps with an already scheduled shift");
+		} else if(data.data){
+			//this means that I am outside of availability, need to ask if OK
+			$("#availStart").text(data.data.start);
+			$("#availEnd").text(data.data.end);
+			$("#btnOverride").attr("data-value",JSON.stringify(data.data.newShift));
+			$("#override").modal("open");
+		}else{
+			$("#alert .modal-content").append("<h3>This shift overlaps with an already scheduled shift</h3>");
+			$("#alert").modal('open');
 		}
 	});
 });
@@ -88,10 +101,15 @@ $("#signupSubmit").on("click",function(){
 	});
 });
 
-
-$("#alertClear").on("click",function(){
-	$("#alert .modal-content").empty();
+$("#btnOverride").on("click",function(){
+	var newShift = JSON.parse($(this).attr("data-value"));
+	console.log(newShift);
+	$.post("/shifts/override",newShift,function(data,err){
+		window.location.reload(true);
+	});
 });
+
+
 
 $("#submitAvailability").on("click",function(){
 
