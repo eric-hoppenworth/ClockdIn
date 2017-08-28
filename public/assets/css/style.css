@@ -7,7 +7,7 @@ html, body {
     background: #333;
 }
 
-wrapper {
+.wrapper {
     width: 90%;
 }
 
@@ -302,4 +302,10 @@ td {
     background-color: #3fc5ff;
     color: #fafafa;
     padding: 3px;
+}
+
+
+/*Modals*/
+.modal-content label{
+    margin-top: 50px;
 }

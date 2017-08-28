@@ -6,6 +6,7 @@ var passport = require("passport");
 
 const Shift = db.Shift;
 const Employee = db.Employee;
+const Availability = db.Availability;
 module.exports = function (router, passport) {
 
 	//HTML routing for home page
@@ -134,6 +135,7 @@ module.exports = function (router, passport) {
 				}).then(function (infoData) {
 					templateData.userInfo.isManager = infoData.is_manager;
 					templateData.userInfo.name = infoData.name;
+					templateData.userInfo.id = infoData.id;
 					//send to Template for rendering.
 					//currently it just sends to the browser
 					//res.json(templateData);
@@ -231,6 +233,7 @@ module.exports = function (router, passport) {
 				}).then(function (infoData) {
 					templateData.userInfo.isManager = infoData.is_manager;
 					templateData.userInfo.name = infoData.name;
+					templateData.userInfo.id = infoData.id;
 					//send to Template for rendering.
 					//currently it just sends to the browser
 					//res.json(templateData);
@@ -289,14 +292,10 @@ module.exports = function (router, passport) {
 			} else {
 				res.json({isValid: false, data: null})
 			}
-
-
 		});
-
-		
 	});
 
-	router.route("/shifts/update").post(function () {
+	router.route("/shifts/update").post(function (req,res) {
 		var myShift = req.body;
 		Shift.update(myShift, {
 			where: {
@@ -305,6 +304,20 @@ module.exports = function (router, passport) {
 		}).then(data => res.json(data));
 	});
 
+	///////////////////////////////////
+	// Update Availability     ////////
+	///////////////////////////////////
+
+	router.post("/availability/update",function(req,res){
+		var newAvail = req.body
+		Availability.update(newAvail,{
+			where:{
+				EmployeeId: newAvail.EmployeeId
+			}
+		});
+	});
+
+
 	/////////////////////////////////
 	// ADD OR UPDATE EMPLOYEES //////
 	/////////////////////////////////
@@ -312,8 +325,11 @@ module.exports = function (router, passport) {
 	router.route("/employees/add").post(function (req, res) {
 		//no code yet
 		var newEmployee = req.body;
-		Employee.create(newEmployee)
-			.then(data => res.json(data))
+		Employee.create(newEmployee).then(function(data){
+			Availability.create({EmployeeId: data.id}).then(function(moreData){
+				res.json(moreData);
+			})
+		});
 	});
 
 	router.route("/employees/update").post(function (req, res) {

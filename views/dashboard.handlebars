@@ -40,7 +40,7 @@
 </div>
 	
 
-<div id="addShift" class="modal modal-fixed-footer login-modal">
+<div id="addShift" class="modal modal-fixed-footer">
     <div class="modal-content">
 		<select id = "shiftName">
 			{{#each data.employees}}
@@ -66,7 +66,7 @@
     </div>
 </div>
 
-<div id="addEmployee" class="modal modal-fixed-footer login-modal">
+<div id="addEmployee" class="modal modal-fixed-footer">
     <div class="modal-content">
 		<input id="empName" type="text" class="validate">
         <label for="empName">Employee Name</label>
@@ -84,11 +84,96 @@
     </div>
 </div>
 
-<div id="alert" class="modal modal-fixed-footer login-modal">
+<div id="alert" class="modal modal-fixed-footer">
     <div class="modal-content">
 		
     </div>
     <div class="modal-footer">
         <p id= "alertClear" class="modal-action modal-close waves-effect waves-green btn-flat"> OK </p>
+    </div>
+</div>
+
+<div id="setAvailability" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Sunday</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="sundayStart" type="time" class="validate">
+                <label for="sundayStart">Start</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="sundayEnd" type="time" class="validate">
+                <label for="sundayEnd">End</label>
+            </div>
+        </div>
+        <h4>Monday</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="mondayStart" type="time" class="validate">
+                <label for="mondayStart">Start</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="mondayEnd" type="time" class="validate">
+                <label for="mondayEnd">End</label>
+            </div>
+        </div>
+        <h4>Tuesday</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="tuesdayStart" type="time" class="validate">
+                <label for="tuesdayStart">Start</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="tuesdayEnd" type="time" class="validate">
+                <label for="tuesdayEnd">End</label>
+            </div>
+        </div>
+        <h4>Wednesday</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="wednesdayStart" type="time" class="validate">
+                <label for="wednesdayStart">Start</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="wednesdayEnd" type="time" class="validate">
+                <label for="wednesdayEnd">End</label>
+            </div>
+        </div>
+        <h4>Thursday</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="thursdayStart" type="time" class="validate">
+                <label for="thursdayStart">Start</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="thursdayEnd" type="time" class="validate">
+                <label for="thursdayEnd">End</label>
+            </div>
+        </div>
+        <h4>Friday</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="fridayStart" type="time" class="validate">
+                <label for="fridayStart">Start</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="fridayEnd" type="time" class="validate">
+                <label for="fridayEnd">End</label>
+            </div>
+        </div>
+        <h4>Saturday</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="saturdayStart" type="time" class="validate">
+                <label for="saturdayStart">Start</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="saturdayEnd" type="time" class="validate">
+                <label for="saturdayEnd">End</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <p id= "submitAvailability" data-value = "{{data.userInfo.id}}" class="modal-action modal-close waves-effect waves-green btn-flat"> Save </p>
     </div>
 </div>
