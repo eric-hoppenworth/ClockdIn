@@ -9,12 +9,14 @@
                 <div class="manager-badge">Manager</div>
                 {{/if}}
             </div>
-            {{#if data.isManager}}
             <div class="card-action">
+            {{#if data.isManager}}
+            
 				<button class = "btn modal-trigger" data-target = "addShift" id = "btnAddShift">Add Shift</button>
                 <button class = "btn modal-trigger" data-target = "addEmployee" id = "btnAddEmployee">Add Employee</button>
-            </div>
             {{/if}}
+                <button class = "btn modal-trigger" data-target = "setAvailability" id = "btnSetAvailability">SEt Availability</button>
+            </div>
         </div>
     </div>
 </div>

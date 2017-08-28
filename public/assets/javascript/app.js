@@ -7,6 +7,7 @@ $(document).ready(function() {
     $("#addShift").modal();
     $("#addEmployee").modal();
     $("#alert").modal();
+    $("#setAvailability").modal();
     $("select").material_select();
 
     $('#modal2').modal();
@@ -92,6 +93,63 @@ $("#alertClear").on("click",function(){
 	$("#alert .modal-content").empty();
 });
 
+$("#submitAvailability").on("click",function(){
+
+	var myAvail = {};
+	if($("#mondayStart").val()){
+		myAvail.monday_start = $("#mondayStart").val();
+	}
+	if($("#mondayEnd").val()){
+		myAvail.monday_end = $("#mondayEnd").val();
+	}
+
+	if($("#tuesdayStart").val()){
+		myAvail.tuesday_start = $("#tuesdayStart").val();
+	}
+	if($("#tuesdayEnd").val()){
+		myAvail.tuesday_end = $("#tuesdayEnd").val();
+	}
+
+	if($("#wednesdayStart").val()){
+		myAvail.wednesday_start = $("#wednesdayStart").val();
+	}
+	if($("#wednesdayEnd").val()){
+		myAvail.wednesday_end = $("#wednesdayEnd").val();
+	}
+
+	if($("#thursdayStart").val()){
+		myAvail.thursday_start = $("#thursdayStart").val();
+	}
+	if($("#thursdayEnd").val()){
+		myAvail.thursday_end = $("#thursdayEnd").val();
+	}
+
+	if($("#fridayStart").val()){
+		myAvail.friday_start = $("#fridayStart").val();
+	}
+	if($("#fridayEnd").val()){
+		myAvail.friday_end = $("#fridayEnd").val();
+	}
+
+	if($("#saturdayStart").val()){
+		myAvail.saturday_start = $("#saturdayStart").val();
+	}
+	if($("#saturdayEnd").val()){
+		myAvail.saturday_end = $("#saturdayEnd").val();
+	}
+
+	if($("#sundayStart").val()){
+		myAvail.sunday_start = $("#sundayStart").val();
+	}
+	if($("#sundayEnd").val()){
+		myAvail.sunday_end = $("#sundayEnd").val();
+	}
+	myAvail.EmployeeId = $(this).attr("data-value")
+	$.post("/availability/update/",myAvail,function(data,err){
+		console.log(data);
+	});
+});
+
 var datetime = null,
         date = null;
 
@@ -104,6 +162,7 @@ $(document).ready(function(){
     datetime = $('#current-time-display')
     update();
     setInterval(update, 1000);
+    Materialize.updateTextFields();
 });
 
 $(".month-btn").click( function() {

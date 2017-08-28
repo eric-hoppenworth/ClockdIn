@@ -1,5 +1,3 @@
-var bcrpyt = require("bcrypt-nodejs");
-
 module.exports = function (sequelize, DataTypes) {
 	var Employee = sequelize.define("Employee", {
 		name: {
@@ -20,6 +18,9 @@ module.exports = function (sequelize, DataTypes) {
 		});
 		Employee.belongsTo(models.User, {
 
+		});
+		Employee.hasOne(models.Availability, {
+			
 		});
 	};
 
