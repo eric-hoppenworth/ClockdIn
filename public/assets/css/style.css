@@ -196,7 +196,7 @@ nav ul a {
     display: inline-block;
 }
 
-.week-btn, .month-btn {
+.week-btn, .day-btn {
     float: left;
     width: 60px;
     max-height: 25px;
@@ -214,7 +214,7 @@ nav ul a {
     border-bottom-left-radius: 4px;
 }
 
-.month-btn {
+.day-btn {
     border: 1px solid #fafafa;
     border-left: none;
     border-top-right-radius: 4px;
@@ -229,7 +229,7 @@ nav ul a {
     border-right: 2px solid #3fc5ff;
 }
 
-.week-month-selected {
+.week-day-selected {
     background-color: #78c5f4;
     color: #fafafa;
     transition: 0.5s ease;

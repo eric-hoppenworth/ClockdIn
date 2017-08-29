@@ -11,9 +11,15 @@
                 <div class="sched-header">
                     <p>Scheduler</p>
                     <div class="week-month-wrapper">
+                    {{#compare data.head.type "===" "week"}}
+                        <div class="week-btn week-day-selected">Week</div>
+                        <div class="separator"></div>
+                        <div class="day-btn">Day</div>
+                    {{else}}
                         <div class="week-btn">Week</div>
                         <div class="separator"></div>
-                        <div class="month-btn week-month-selected">Month</div>
+                        <div class="day-btn  week-day-selected">Day</div>
+                    {{/compare}}
                     </div>
                 </div>
                 <div class="row month-row">

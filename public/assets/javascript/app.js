@@ -183,14 +183,16 @@ $(document).ready(function(){
     Materialize.updateTextFields();
 });
 
-$(".month-btn").click( function() {
-	$(this).addClass("week-month-selected");
-	$(".week-btn").removeClass("week-month-selected");
+$(".day-btn").click( function() {
+	// $(this).addClass("week-month-selected");
+	// $(".week-btn").removeClass("week-month-selected");
+	window.location = window.location.origin + "/day";
 });
 
 $(".week-btn").click( function() {
-	$(this).addClass("week-month-selected");
-	$(".month-btn").removeClass("week-month-selected");
+	// $(this).addClass("week-month-selected");
+	// $(".month-btn").removeClass("week-month-selected");
+	window.location = window.location.origin + "/dashboard";
 });
 
 $(".arrowBtn").on("click",function(){
