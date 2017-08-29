@@ -82,9 +82,8 @@ module.exports = function (router, passport) {
 			for (var i = 0; i < 24; i++) {
 				templateData.dayHours.push(moment(myDay).hour(6 + i).format("h a"));
 			}
-
-			for (var i = 0; i < dbData.length; i++) {
-				var myEmployee = dbData[i];
+			for (var k = 0; k < dbData.length; k++) {
+				var myEmployee = dbData[k];
 				var myRow = {};
 				myRow.name = myEmployee.name;
 				myRow.hours = [];
@@ -112,7 +111,6 @@ module.exports = function (router, passport) {
 						}
 					}
 				}
-				console.log(myRow.hours);
 				templateData.rows.push(myRow);
 			}
 			//Now that each employee is set, add in the meta-data
@@ -139,7 +137,6 @@ module.exports = function (router, passport) {
 					//send to Template for rendering.
 					//currently it just sends to the browser
 					//res.json(templateData);
-					console.log(templateData);
 					res.render("dashboard", {
 						data: templateData
 					});
