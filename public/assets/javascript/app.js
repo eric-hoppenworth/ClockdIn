@@ -89,7 +89,7 @@ $("#signupSubmit").on("click",function(){
 	myUser.email = $("#signupEmail").val().trim();
 	myUser.password = $("#signupPassword").val();
 	myUser.EmployeeId = $("#signupId").val();
-	myUser.ImageURL = $("#signupImageURL").val();
+	myUser.imageURL = $("#signupImageURL").val();
 
 	$.post("/auth/signup",myUser,function(data,err){
 
