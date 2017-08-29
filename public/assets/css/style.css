@@ -4,7 +4,7 @@
 html, body {
 	height: 100%;
     font-family: 'Raleway', sans-serif;
-    background: #333;
+    background: #555;
 }
 
 .wrapper {
@@ -33,6 +33,14 @@ html, body {
 
 .sm-md {
     font-size: 3em;
+}
+
+.btn:hover {
+    background-color: #6ec1f4;
+}
+
+.btn:focus {
+    background-color: #119ef4;
 }
 
 /***** LOGIN PAGE *****/
@@ -158,6 +166,14 @@ nav ul a {
     border-radius: 20px;
 }
 
+.emp-card {
+    text-align: center;
+}
+
+.card-action button {
+    width: 200px;
+    margin-bottom: 10px;
+}
 
 /* RIGHT COLUMN */
 
@@ -194,6 +210,7 @@ nav ul a {
     border-radius: 5px;
     background-color: #fafafa;
     display: inline-block;
+    float: right;
 }
 
 .week-btn, .day-btn {
@@ -230,7 +247,7 @@ nav ul a {
 }
 
 .week-day-selected {
-    background-color: #78c5f4;
+    background-color: forestgreen;
     color: #fafafa;
     transition: 0.5s ease;
     cursor: pointer;
@@ -267,6 +284,8 @@ i:hover {
     background: #fafafa;
     height: 100%;
     min-height: 400px;
+    overflow-x: scroll;
+    overflow-y: scroll;
 }
 
 table {
@@ -274,11 +293,11 @@ table {
 }
 
 .table-name {
-    width: 30%;
+    min-width: 200px;
 }
 
 .table-day {
-    width: 10%;
+    min-width: 100px;
 }
 
 .table-hr {
@@ -287,7 +306,7 @@ table {
 }
 
 tr {
-    border-bottom: 1px solid #3fc5ff;
+    border-bottom: 1px solid #444;
 }
 
 thead tr {
@@ -295,17 +314,27 @@ thead tr {
 }
 
 td {
-    border-right: 1px solid #3fc5ff;
+    border-right: 1px solid #444;
 }
 
 .days-with-schedule {
     background-color: #3fc5ff;
     color: #fafafa;
     padding: 3px;
+    border: none;
+    border-bottom: 1px solid #444;
 }
 
+/* Availability */
 
-/*Modals*/
-.modal-content label{
-    margin-top: 50px;
+#setAvailability div {
+    overflow-x: hidden;
+}
+
+#setAvailability .input-field {
+    overflow-y: hidden;
+}
+
+.input-field.col label {
+    left: 5.75rem;
 }
