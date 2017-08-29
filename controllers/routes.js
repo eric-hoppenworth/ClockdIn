@@ -47,7 +47,7 @@ module.exports = function (router, passport) {
 		});
 	})
 
-	router.route("/day/:dayStart?").get(function (req, res) {
+	router.get("/day/:dayStart?",isLoggedIn,function (req, res) {
 		//TESTING
 		var dayStart;
 		var dayEnd;
