@@ -1,5 +1,6 @@
 function emptyAlert(){
 	$("#alert .modal-content").empty();
+	window.location.reload(true);
 }
 
 
@@ -164,7 +165,7 @@ $("#submitAvailability").on("click",function(){
 	}
 	myAvail.EmployeeId = $(this).attr("data-value")
 	$.post("/availability/update/",myAvail,function(data,err){
-		console.log(data);
+		window.location.reload(true);
 	});
 });
 
